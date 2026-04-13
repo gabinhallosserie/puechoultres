@@ -1,0 +1,204 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Container from '../components/ui/Container.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
+import Animate from '../components/react/ScrollAnimations';
+import ContactForm from '../components/react/ContactForm';
+
+const page = {
+  title: 'Nous contacter',
+  description: 'Contactez Puechoultres & Fils pour vos projets BTP en Aveyron. Devis gratuit sous 48h. Téléphone : 05 65 69 02 70. ZA Marengo, Baraqueville (12160).',
+};
+
+const horaires = [
+  { jours: 'Lundi – Vendredi', heures: '07h30 – 12h00 / 13h30 – 17h30' },
+  { jours: 'Samedi', heures: '07h30 – 12h00' },
+  { jours: 'Dimanche', heures: 'Fermé' },
+];
+
+const coordonnees = [
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>',
+    label: 'Téléphone',
+    value: '05 65 69 02 70',
+    href: 'tel:0565690270',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>',
+    label: 'Email',
+    value: 'contact@puechoultres.fr',
+    href: 'mailto:contact@puechoultres.fr',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+    label: 'Adresse',
+    value: 'ZA Marengo — 12160 Baraqueville',
+    href: 'https://maps.google.com/maps?q=ZA+Marengo,+BARAQUEVILLE,+12160',
+  },
+];
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <!-- Hero -->
+    <section class="relative pt-32 pb-16 overflow-hidden bg-gray-950">
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-primary/10" aria-hidden="true" />
+      <div class="absolute top-0 right-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none translate-x-1/2 -translate-y-1/4" aria-hidden="true" />
+      <Container class="relative z-10">
+        <Animate animation="slideUp" client:visible>
+          <nav aria-label="Fil d'Ariane" class="mb-8">
+            <ol class="flex items-center gap-2 text-sm text-gray-500">
+              <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+              <li aria-hidden="true" class="text-gray-700">/</li>
+              <li class="text-gray-300" aria-current="page">Nous contacter</li>
+            </ol>
+          </nav>
+          <div class="max-w-2xl">
+            <p class="text-primary font-medium text-sm uppercase tracking-widest mb-4">Devis gratuit</p>
+            <h1 class="font-heading font-black text-4xl sm:text-6xl text-white leading-tight mb-5">Nous contacter</h1>
+            <p class="text-gray-300 text-xl leading-relaxed">
+              Décrivez votre projet, nous vous répondons sous 48h avec un devis personnalisé et gratuit.
+            </p>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+    <!-- Contenu principal -->
+    <section class="py-16 bg-gray-900">
+      <Container>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+          <!-- Colonne gauche : formulaire -->
+          <div class="lg:col-span-7">
+            <Animate animation="slideUp" client:visible>
+              <GlassCard hover={false}>
+                <h2 class="font-heading font-bold text-xl text-white mb-6">Envoyer un message</h2>
+                {/* Formulaire hidden pour Netlify (bot detection) */}
+                <form name="contact" data-netlify="true" data-netlify-honeypot="bot-field" hidden>
+                  <input type="text" name="nom" />
+                  <input type="text" name="prenom" />
+                  <input type="email" name="email" />
+                  <input type="tel" name="telephone" />
+                  <select name="sujet"></select>
+                  <textarea name="message"></textarea>
+                  <input type="checkbox" name="rgpd" />
+                </form>
+                <ContactForm client:load />
+              </GlassCard>
+            </Animate>
+          </div>
+
+          <!-- Colonne droite : infos -->
+          <aside class="lg:col-span-5 flex flex-col gap-6">
+
+            <!-- Coordonnées -->
+            <Animate animation="slideRight" client:visible>
+              <GlassCard hover={false}>
+                <h2 class="font-heading font-bold text-lg text-white mb-5">Coordonnées</h2>
+                <ul class="flex flex-col gap-4">
+                  {coordonnees.map(c => (
+                    <li>
+                      <a
+                        href={c.href}
+                        target={c.href.startsWith('http') ? '_blank' : undefined}
+                        rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+                        class="flex items-start gap-4 group"
+                      >
+                        <div class="w-10 h-10 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0 group-hover:bg-primary/20 transition-colors">
+                          <div class="w-5 h-5" set:html={c.icon} />
+                        </div>
+                        <div>
+                          <p class="text-xs text-gray-500 mb-0.5">{c.label}</p>
+                          <p class="text-white text-sm font-medium group-hover:text-primary transition-colors">{c.value}</p>
+                        </div>
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </GlassCard>
+            </Animate>
+
+            <!-- Horaires -->
+            <Animate animation="slideRight" delay={0.1} client:visible>
+              <GlassCard hover={false}>
+                <h2 class="font-heading font-bold text-lg text-white mb-5">Horaires d'ouverture</h2>
+                <ul class="flex flex-col gap-3">
+                  {horaires.map(h => (
+                    <li class="flex items-center justify-between gap-4 text-sm">
+                      <span class="text-gray-400">{h.jours}</span>
+                      <span class={h.heures === 'Fermé' ? 'text-gray-600' : 'text-white font-medium'}>{h.heures}</span>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-4 pt-4 border-t border-white/10">
+                  <p class="text-xs text-gray-500 leading-relaxed">
+                    Pour les urgences de chantier, contactez-nous directement par téléphone.
+                  </p>
+                </div>
+              </GlassCard>
+            </Animate>
+
+            <!-- Carte Google Maps -->
+            <Animate animation="slideRight" delay={0.2} client:visible>
+              <div class="rounded-card overflow-hidden border border-white/10 bg-white/5">
+                <div class="aspect-[4/3] w-full">
+                  <iframe
+                    title="Localisation Puechoultres & Fils — Baraqueville"
+                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2804.6!2d2.4173!3d44.2716!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x12b4d8a6b0000001%3A0x1!2sZA+Marengo%2C+12160+Baraqueville!5e0!3m2!1sfr!2sfr!4v1700000000000!5m2!1sfr!2sfr"
+                    width="100%"
+                    height="100%"
+                    style="border:0;"
+                    allowfullscreen
+                    loading="lazy"
+                    referrerpolicy="no-referrer-when-downgrade"
+                    class="w-full h-full grayscale opacity-80 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
+                  ></iframe>
+                </div>
+                <div class="px-4 py-3 flex items-center justify-between gap-2">
+                  <p class="text-xs text-gray-500">ZA Marengo · 12160 Baraqueville</p>
+                  <a
+                    href="https://maps.google.com/maps?q=ZA+Marengo,+BARAQUEVILLE,+12160"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    class="text-xs text-primary hover:text-primary-light font-medium transition-colors shrink-0"
+                  >
+                    Ouvrir dans Maps →
+                  </a>
+                </div>
+              </div>
+            </Animate>
+
+          </aside>
+        </div>
+      </Container>
+    </section>
+
+    <!-- Bande alternative contact rapide -->
+    <section class="py-14 bg-gray-950 border-t border-white/5">
+      <Container>
+        <Animate animation="slideUp" client:visible>
+          <div class="flex flex-col sm:flex-row items-center justify-between gap-6 px-8 py-8 rounded-card border border-white/10 bg-white/5">
+            <div>
+              <h2 class="font-heading font-bold text-xl text-white mb-1">Besoin d'une réponse rapide ?</h2>
+              <p class="text-gray-400 text-sm">Nos équipes sont disponibles du lundi au vendredi de 7h30 à 17h30.</p>
+            </div>
+            <a
+              href="tel:0565690270"
+              class="flex items-center gap-3 px-6 py-3.5 rounded-btn bg-gradient-to-r from-primary to-primary-dark text-white font-semibold text-sm shadow-btn hover:shadow-btn-hover hover:-translate-y-0.5 transition-all duration-200 shrink-0"
+            >
+              <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.29h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.91a16 16 0 0 0 6 6l.91-.91a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 21.73 16.92z"/></svg>
+              05 65 69 02 70
+            </a>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

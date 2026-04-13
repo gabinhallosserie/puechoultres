@@ -1,0 +1,169 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Container from '../../components/ui/Container.astro';
+import GlassCard from '../../components/ui/GlassCard.astro';
+import Button from '../../components/ui/Button.astro';
+import Animate from '../../components/react/ScrollAnimations';
+import Gallery from '../../components/ui/Gallery.astro';
+
+const gallery = [
+  { src: '/images/voirie-01.jpg', alt: 'Pose de tuyaux PVC et d\'une gaine EDF', caption: 'Pose de tuyaux PVC et d\'une gaine EDF' },
+  { src: '/images/voirie-02.jpg', alt: 'Pose de bordure et préparation d\'un coulage de béton', caption: 'Pose de bordure et préparation d\'un coulage de béton' }
+];
+
+const page = {
+  title: 'Voirie et réseaux',
+  description: 'Puechoultres & Fils est spécialisée en VRD : voies d\'accès, réseaux d\'eau, électricité, télécommunications, évacuation eaux pluviales et usées en Aveyron.',
+  hero: '/images/hero-voirie.jpg',
+};
+
+const prestations = [
+  'Voies d\'accès et chemins ruraux',
+  'Réseaux d\'alimentation en eau potable',
+  'Réseaux électricité et télécommunication',
+  'Évacuation eaux pluviales et eaux usées',
+  'Tranchées et pose de canalisations PVC',
+  'Pavage et réfection de trottoirs',
+  'Enfouissement de réseaux',
+  'Embellissement urbain et rural',
+];
+
+const autresServices = [
+  { label: 'Travaux publics',    href: '/services/travaux-publics' },
+  { label: 'Assainissement',     href: '/services/assainissement' },
+  { label: 'Goudronnage',        href: '/services/goudronnage' },
+  { label: 'Béton prêt à l\'emploi', href: '/services/beton-pret-a-l-emploi' },
+  { label: 'Démolition',         href: '/services/demolition' },
+  { label: 'Transport',          href: '/services/transport' },
+];
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <section class="relative h-72 sm:h-96 flex items-end overflow-hidden">
+      <img src={page.hero} alt="Travaux de voirie et réseaux Puech Oultres" class="absolute inset-0 w-full h-full object-cover object-center" loading="eager" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+      <Container class="relative z-10 pb-8 sm:pb-12">
+        <nav aria-label="Fil d'Ariane" class="mb-3">
+          <ol class="flex items-center gap-2 text-sm text-gray-400">
+            <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+            <li aria-hidden="true" class="text-gray-600">/</li>
+            <li><a href="/services" class="hover:text-white transition-colors">Services</a></li>
+            <li aria-hidden="true" class="text-gray-600">/</li>
+            <li class="text-white font-medium" aria-current="page">Voirie et réseaux</li>
+          </ol>
+        </nav>
+        <h1 class="font-heading font-black text-3xl sm:text-5xl text-white leading-tight">Voirie et réseaux</h1>
+      </Container>
+    </section>
+
+    <section class="py-16 bg-gray-900">
+      <Container>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+          <div class="lg:col-span-8 flex flex-col gap-12">
+            <Animate animation="slideUp" client:visible>
+              <div>
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-5">Notre expertise</h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                  <p>La SARL Puechoultres & Fils est spécialisée dans les <strong class="text-white">VRD — Voirie et Réseaux Divers</strong>. Elle réalise des voies d'accès et met en œuvre des réseaux d'alimentation en eau, en électricité et en télécommunication.</p>
+                  <p>Les VRD concernent la construction et l'entretien des réseaux d'évacuation d'eaux de pluie ou d'eaux usées. Ces travaux permettent l'embellissement d'un environnement urbain ou rural lors de travaux d'enfouissement des réseaux, de pavage des rues ou de réfection des trottoirs.</p>
+                  <p>Nos équipes interviennent aussi bien pour les collectivités locales que pour les particuliers, en collaboration avec les gestionnaires de réseaux et les maîtres d'ouvrage.</p>
+                </div>
+              </div>
+            </Animate>
+
+            <Animate animation="slideUp" delay={0.1} client:visible>
+              <div>
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-6">Nos prestations</h2>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {prestations.map(item => (
+                    <li class="flex items-start gap-3 text-gray-300">
+                      <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Animate>
+
+            <Animate animation="slideUp" delay={0.15} client:visible>
+              <div class="p-6 rounded-card border border-white/10 bg-white/5">
+                <h3 class="font-heading font-semibold text-lg text-white mb-2">Zone d'intervention</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Aveyron (12) et départements limitrophes. Nous travaillons avec les communes, syndicats d'eau et opérateurs télécoms.</p>
+              </div>
+            </Animate>
+          </div>
+
+          <aside class="lg:col-span-4">
+            <div class="lg:sticky lg:top-24 flex flex-col gap-6">
+              <GlassCard hover={false}>
+                <h3 class="font-heading font-bold text-lg text-white mb-5">Besoin d'un devis ?</h3>
+                <form name="devis-voirie" method="POST" data-netlify="true" class="flex flex-col gap-4">
+                  <input type="hidden" name="form-name" value="devis-voirie" />
+                  <input type="hidden" name="service" value="Voirie et réseaux" />
+                  <div>
+                    <label for="nom" class="block text-xs font-medium text-gray-400 mb-1.5">Nom *</label>
+                    <input id="nom" name="nom" type="text" required placeholder="Votre nom" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="email" class="block text-xs font-medium text-gray-400 mb-1.5">Email *</label>
+                    <input id="email" name="email" type="email" required placeholder="votre@email.fr" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="telephone" class="block text-xs font-medium text-gray-400 mb-1.5">Téléphone</label>
+                    <input id="telephone" name="telephone" type="tel" placeholder="06 00 00 00 00" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="message" class="block text-xs font-medium text-gray-400 mb-1.5">Message *</label>
+                    <textarea id="message" name="message" required rows="4" placeholder="Type de réseau, linéaire, commune…" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none"></textarea>
+                  </div>
+                  <Button variant="primary" class="w-full justify-center">Envoyer ma demande</Button>
+                </form>
+              </GlassCard>
+              <GlassCard hover={false}>
+                <h3 class="font-heading font-semibold text-base text-white mb-4">Autres services</h3>
+                <ul class="flex flex-col gap-1">
+                  {autresServices.map(s => (
+                    <li>
+                      <a href={s.href} class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-[150ms]">
+                        <svg class="w-3.5 h-3.5 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                        {s.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-4 pt-4 border-t border-white/10">
+                  <a href="/services" class="text-sm text-primary hover:text-primary-light font-medium transition-colors">Voir tous les services →</a>
+                </div>
+              </GlassCard>
+            </div>
+          </aside>
+
+        </div>
+      </Container>
+    </section>
+
+    <Gallery images={gallery} title="Nos chantiers voirie et réseaux" />
+
+    <section class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #1F1F1F 0%, #3B0A0A 50%, #1F1F1F 100%);">
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" aria-hidden="true" />
+      <Container class="relative z-10 text-center">
+        <Animate animation="slideUp" client:visible>
+          <h2 class="font-heading font-black text-2xl sm:text-4xl text-white mb-4">Un projet VRD ?</h2>
+          <p class="text-gray-300 text-lg max-w-xl mx-auto mb-8">Contactez-nous pour un devis gratuit sous 48h.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href="/nous-contacter" variant="primary" size="lg">Contactez-nous</Button>
+            <Button href="tel:0565690270" variant="outline" size="lg">05 65 69 02 70</Button>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

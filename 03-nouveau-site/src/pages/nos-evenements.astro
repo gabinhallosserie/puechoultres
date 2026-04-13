@@ -1,0 +1,212 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Container from '../components/ui/Container.astro';
+import Button from '../components/ui/Button.astro';
+import Animate from '../components/react/ScrollAnimations';
+
+const page = {
+  title: 'Nos événements',
+  description: 'Retrouvez les événements, salons professionnels et actualités de Puechoultres & Fils, entreprise BTP en Aveyron.',
+};
+
+type Evenement = {
+  titre: string;
+  date: string;      // ISO 8601 : "2025-09-15"
+  lieu: string;
+  description: string;
+  image?: string;
+  lien?: string;
+  passe?: boolean;
+};
+
+// Alimenter ce tableau lors des prochains événements
+const evenements: Evenement[] = [];
+
+// Séparation événements à venir / passés
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+const aVenir = evenements.filter(e => new Date(e.date) >= today && !e.passe);
+const passes  = evenements.filter(e => new Date(e.date) < today  || e.passe);
+
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('fr-FR', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+}
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <!-- Hero -->
+    <section class="relative pt-32 pb-16 overflow-hidden bg-gray-950">
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-primary/10" aria-hidden="true" />
+      <div class="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-primary/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+      <Container class="relative z-10">
+        <Animate animation="slideUp" client:visible>
+          <nav aria-label="Fil d'Ariane" class="mb-8">
+            <ol class="flex items-center gap-2 text-sm text-gray-500">
+              <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+              <li aria-hidden="true" class="text-gray-700">/</li>
+              <li class="text-gray-300" aria-current="page">Nos événements</li>
+            </ol>
+          </nav>
+          <div class="max-w-2xl">
+            <p class="text-primary font-medium text-sm uppercase tracking-widest mb-4">Agenda</p>
+            <h1 class="font-heading font-black text-4xl sm:text-6xl text-white leading-tight mb-5">
+              Nos événements
+            </h1>
+            <p class="text-gray-300 text-xl leading-relaxed">
+              Salons professionnels, journées portes ouvertes, actualités terrain — suivez la vie de Puechoultres & Fils.
+            </p>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+    <!-- Événements à venir -->
+    <section class="py-20 bg-gray-900">
+      <Container>
+
+        {aVenir.length > 0 ? (
+          <>
+            <Animate animation="slideUp" client:visible>
+              <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-10">
+                Événements à venir
+              </h2>
+            </Animate>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {aVenir.map((ev, i) => (
+                <Animate animation="slideUp" delay={i * 0.1} className="h-full" client:visible>
+                  <article class="group flex flex-col h-full overflow-hidden rounded-card border border-white/10 bg-white/5 hover:border-primary/30 hover:bg-white/[0.07] transition-all duration-300 hover:-translate-y-2">
+                    {ev.image ? (
+                      <div class="aspect-[16/9] overflow-hidden">
+                        <img
+                          src={ev.image}
+                          alt={ev.titre}
+                          class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                          loading="lazy"
+                        />
+                      </div>
+                    ) : (
+                      <div class="aspect-[16/9] bg-gradient-to-br from-primary/10 to-gray-800 flex items-center justify-center">
+                        <svg class="w-12 h-12 text-primary/30" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                          <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                          <line x1="16" y1="2" x2="16" y2="6"/>
+                          <line x1="8" y1="2" x2="8" y2="6"/>
+                          <line x1="3" y1="10" x2="21" y2="10"/>
+                        </svg>
+                      </div>
+                    )}
+                    <div class="flex flex-col gap-3 p-6 flex-1">
+                      <div class="flex items-center gap-3">
+                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold">
+                          <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                          <time datetime={ev.date}>{formatDate(ev.date)}</time>
+                        </span>
+                        {ev.lieu && (
+                          <span class="text-xs text-gray-500 truncate">{ev.lieu}</span>
+                        )}
+                      </div>
+                      <h3 class="font-heading font-bold text-lg text-white leading-snug group-hover:text-primary transition-colors">
+                        {ev.titre}
+                      </h3>
+                      <p class="text-gray-400 text-sm leading-relaxed flex-1">{ev.description}</p>
+                      {ev.lien && (
+                        <a
+                          href={ev.lien}
+                          class="inline-flex items-center gap-1.5 text-sm text-primary hover:text-primary-light font-medium transition-colors mt-1 self-start"
+                        >
+                          En savoir plus
+                          <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                        </a>
+                      )}
+                    </div>
+                  </article>
+                </Animate>
+              ))}
+            </div>
+          </>
+        ) : (
+          <!-- État vide -->
+          <Animate animation="slideUp" client:visible>
+            <div class="flex flex-col items-center justify-center text-center py-20 gap-6">
+              <div class="w-20 h-20 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <svg class="w-9 h-9 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"/>
+                  <line x1="16" y1="2" x2="16" y2="6"/>
+                  <line x1="8" y1="2" x2="8" y2="6"/>
+                  <line x1="3" y1="10" x2="21" y2="10"/>
+                </svg>
+              </div>
+              <div>
+                <h2 class="font-heading font-bold text-2xl text-white mb-3">Aucun événement à venir</h2>
+                <p class="text-gray-400 text-base leading-relaxed max-w-md">
+                  Nous n'avons pas d'événement planifié pour le moment. Revenez bientôt ou contactez-nous pour en savoir plus sur nos actualités.
+                </p>
+              </div>
+              <Button href="/nous-contacter" variant="outline" size="lg">Nous contacter</Button>
+            </div>
+          </Animate>
+        )}
+
+        <!-- Événements passés -->
+        {passes.length > 0 && (
+          <div class="mt-20">
+            <Animate animation="slideUp" client:visible>
+              <h2 class="font-heading font-bold text-xl text-gray-500 mb-8 flex items-center gap-3">
+                <span>Événements passés</span>
+                <span class="h-px flex-1 bg-white/10" />
+              </h2>
+            </Animate>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {passes.map((ev, i) => (
+                <Animate animation="slideUp" delay={i * 0.08} client:visible>
+                  <article class="flex items-start gap-4 p-5 rounded-card border border-white/5 bg-white/[0.02] opacity-60 hover:opacity-100 transition-opacity duration-200">
+                    <div class="w-14 h-14 rounded-xl bg-white/5 border border-white/10 flex flex-col items-center justify-center shrink-0 text-center">
+                      <span class="font-heading font-black text-lg text-gray-400 leading-none">
+                        {new Date(ev.date).getDate()}
+                      </span>
+                      <span class="text-gray-600 text-xs uppercase tracking-wide">
+                        {new Date(ev.date).toLocaleDateString('fr-FR', { month: 'short' })}
+                      </span>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                      <p class="font-heading font-semibold text-gray-300 text-sm mb-1 truncate">{ev.titre}</p>
+                      {ev.lieu && <p class="text-gray-600 text-xs mb-1">{ev.lieu}</p>}
+                      <p class="text-gray-500 text-xs leading-relaxed line-clamp-2">{ev.description}</p>
+                    </div>
+                  </article>
+                </Animate>
+              ))}
+            </div>
+          </div>
+        )}
+
+      </Container>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #1F1F1F 0%, #3B0A0A 50%, #1F1F1F 100%);">
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" aria-hidden="true" />
+      <Container class="relative z-10 text-center">
+        <Animate animation="slideUp" client:visible>
+          <h2 class="font-heading font-black text-2xl sm:text-4xl text-white mb-4">Une question sur nos activités ?</h2>
+          <p class="text-gray-300 text-lg max-w-xl mx-auto mb-8">Notre équipe est disponible du lundi au vendredi pour répondre à toutes vos demandes.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href="/nous-contacter" variant="primary" size="lg">Contactez-nous</Button>
+            <Button href="tel:0565690270" variant="outline" size="lg">05 65 69 02 70</Button>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

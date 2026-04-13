@@ -1,0 +1,201 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Container from '../components/ui/Container.astro';
+
+const page = {
+  title: 'Mentions légales',
+  description: 'Mentions légales du site internet de Puechoultres & Fils — SARL immatriculée à Baraqueville (Aveyron). Informations sur l\'éditeur, l\'hébergeur et le traitement des données personnelles.',
+};
+
+const sections = [
+  {
+    id: 'editeur',
+    titre: '1. Éditeur du site',
+    contenu: `
+      <p>Le site <strong>www.puechoultres.fr</strong> est édité par :</p>
+      <ul>
+        <li><strong>Raison sociale :</strong> SARL Puechoultres & Fils</li>
+        <li><strong>Forme juridique :</strong> Société à responsabilité limitée (SARL)</li>
+        <li><strong>Siège social :</strong> ZA Marengo — 12160 Baraqueville (Aveyron)</li>
+        <li><strong>Téléphone :</strong> <a href="tel:0565690270">05 65 69 02 70</a></li>
+        <li><strong>Email :</strong> <a href="mailto:contact@puechoultres.fr">contact@puechoultres.fr</a></li>
+        <li><strong>N° SIRET :</strong> [À compléter]</li>
+        <li><strong>N° RCS :</strong> [À compléter] — Tribunal de commerce de Millau</li>
+        <li><strong>Capital social :</strong> [À compléter] €</li>
+        <li><strong>Directeur de la publication :</strong> [Nom du gérant]</li>
+      </ul>
+    `,
+  },
+  {
+    id: 'hebergeur',
+    titre: '2. Hébergeur',
+    contenu: `
+      <p>Le site est hébergé par :</p>
+      <ul>
+        <li><strong>Société :</strong> Netlify, Inc.</li>
+        <li><strong>Adresse :</strong> 512 2nd Street, Suite 200 — San Francisco, CA 94107, États-Unis</li>
+        <li><strong>Site web :</strong> <a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">www.netlify.com</a></li>
+      </ul>
+    `,
+  },
+  {
+    id: 'propriete-intellectuelle',
+    titre: '3. Propriété intellectuelle',
+    contenu: `
+      <p>L'ensemble du contenu de ce site (textes, images, graphismes, logo, icônes, sons, vidéos…) est la propriété exclusive de la SARL Puechoultres & Fils ou de ses partenaires, et est protégé par les lois françaises et internationales relatives à la propriété intellectuelle.</p>
+      <p>Toute reproduction, représentation, modification, publication, adaptation ou exploitation, totale ou partielle, du contenu de ce site par quelque procédé que ce soit, sans autorisation préalable écrite de la SARL Puechoultres & Fils, est strictement interdite et constitue une contrefaçon sanctionnée par les articles L.335-2 et suivants du Code de la propriété intellectuelle.</p>
+      <p>Les marques et logos figurant sur le site sont des marques déposées. Toute reproduction sans autorisation expresse est interdite.</p>
+    `,
+  },
+  {
+    id: 'responsabilite',
+    titre: '4. Limitation de responsabilité',
+    contenu: `
+      <p>La SARL Puechoultres & Fils s'efforce de fournir sur ce site des informations aussi précises que possible. Toutefois, elle ne saurait être tenue responsable des omissions, inexactitudes ou carences dans la mise à jour des informations, qu'elles soient de son fait ou du fait des tiers partenaires qui lui fournissent ces informations.</p>
+      <p>Les informations contenues sur ce site sont données à titre indicatif et sont susceptibles d'évoluer. Elles ne sont en aucun cas exhaustives et ne peuvent engager la responsabilité de l'éditeur.</p>
+      <p>La SARL Puechoultres & Fils ne saurait être tenue responsable des dommages directs ou indirects causés au matériel de l'utilisateur lors de l'accès au site, résultant soit de l'utilisation d'un matériel ne répondant pas aux spécifications techniques requises, soit de l'apparition d'un bug ou d'une incompatibilité.</p>
+      <p>Des espaces interactifs sont à la disposition des utilisateurs. La SARL Puechoultres & Fils se réserve le droit de supprimer, sans mise en demeure préalable, tout contenu déposé qui contreviendrait à la législation applicable en France.</p>
+    `,
+  },
+  {
+    id: 'donnees-personnelles',
+    titre: '5. Données personnelles',
+    contenu: `
+      <p>Conformément au Règlement général sur la protection des données (RGPD — Règlement UE 2016/679) et à la loi n° 78-17 du 6 janvier 1978 relative à l'informatique, aux fichiers et aux libertés modifiée, vous disposez de droits sur vos données personnelles.</p>
+      <h4>Responsable du traitement</h4>
+      <p>SARL Puechoultres & Fils — ZA Marengo, 12160 Baraqueville — <a href="mailto:contact@puechoultres.fr">contact@puechoultres.fr</a></p>
+      <h4>Données collectées</h4>
+      <p>Les données collectées via les formulaires de contact et de devis (nom, prénom, email, téléphone, message) sont utilisées exclusivement pour répondre à vos demandes. Les données de candidature (CV, lettre de motivation) sont conservées pour une durée maximale de 2 ans.</p>
+      <h4>Finalités</h4>
+      <ul>
+        <li>Traitement de vos demandes de devis et de contact</li>
+        <li>Traitement des candidatures à l'emploi</li>
+        <li>Amélioration de nos services</li>
+      </ul>
+      <h4>Vos droits</h4>
+      <p>Conformément au RGPD, vous disposez des droits suivants :</p>
+      <ul>
+        <li><strong>Droit d'accès</strong> à vos données personnelles</li>
+        <li><strong>Droit de rectification</strong> des données inexactes</li>
+        <li><strong>Droit à l'effacement</strong> (droit à l'oubli)</li>
+        <li><strong>Droit à la limitation</strong> du traitement</li>
+        <li><strong>Droit à la portabilité</strong> de vos données</li>
+        <li><strong>Droit d'opposition</strong> au traitement</li>
+      </ul>
+      <p>Pour exercer ces droits, contactez-nous par email à <a href="mailto:contact@puechoultres.fr">contact@puechoultres.fr</a> ou par courrier à notre adresse de siège. Vous disposez également du droit d'introduire une réclamation auprès de la CNIL (<a href="https://www.cnil.fr" target="_blank" rel="noopener noreferrer">www.cnil.fr</a>).</p>
+      <h4>Durée de conservation</h4>
+      <p>Les données de contact sont conservées 3 ans à compter du dernier contact. Les données de candidature sont conservées 2 ans. Les données de clients sont conservées conformément aux obligations légales (10 ans pour les données comptables).</p>
+    `,
+  },
+  {
+    id: 'cookies',
+    titre: '6. Cookies',
+    contenu: `
+      <p>Un cookie est un petit fichier texte stocké sur votre terminal (ordinateur, tablette, smartphone) lors de la visite d'un site web. Il permet au site de mémoriser des informations sur votre visite.</p>
+      <h4>Cookies utilisés</h4>
+      <ul>
+        <li><strong>Cookies techniques :</strong> indispensables au fonctionnement du site (session, préférences d'affichage). Ils ne nécessitent pas de consentement.</li>
+        <li><strong>Cookies analytiques :</strong> si des outils d'analyse d'audience sont utilisés, ils collectent des données anonymisées sur la navigation (pages visitées, durée de visite). Ces cookies sont soumis à votre consentement.</li>
+      </ul>
+      <h4>Gestion des cookies</h4>
+      <p>Vous pouvez à tout moment configurer votre navigateur pour refuser ou supprimer les cookies. Consultez l'aide de votre navigateur pour en savoir plus :</p>
+      <ul>
+        <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" rel="noopener noreferrer">Google Chrome</a></li>
+        <li><a href="https://support.mozilla.org/fr/kb/cookies-informations-sites-enregistrent" target="_blank" rel="noopener noreferrer">Mozilla Firefox</a></li>
+        <li><a href="https://support.apple.com/fr-fr/guide/safari/sfri11471/mac" target="_blank" rel="noopener noreferrer">Safari</a></li>
+        <li><a href="https://support.microsoft.com/fr-fr/windows/supprimer-et-g%C3%A9rer-les-cookies-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" rel="noopener noreferrer">Microsoft Edge</a></li>
+      </ul>
+      <p>Le refus des cookies techniques peut altérer le fonctionnement du site.</p>
+    `,
+  },
+  {
+    id: 'droit-applicable',
+    titre: '7. Droit applicable et juridiction',
+    contenu: `
+      <p>Les présentes mentions légales sont soumises au droit français. En cas de litige, et à défaut de résolution amiable, les tribunaux français seront seuls compétents.</p>
+      <p>Pour toute question concernant les présentes mentions légales, vous pouvez nous contacter à <a href="mailto:contact@puechoultres.fr">contact@puechoultres.fr</a>.</p>
+      <p class="text-gray-500 text-sm mt-4">Dernière mise à jour : {new Date().toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' })}</p>
+    `,
+  },
+];
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <!-- Hero minimal -->
+    <section class="relative pt-32 pb-12 bg-gray-950 border-b border-white/5">
+      <Container>
+        <nav aria-label="Fil d'Ariane" class="mb-6">
+          <ol class="flex items-center gap-2 text-sm text-gray-500">
+            <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+            <li aria-hidden="true" class="text-gray-700">/</li>
+            <li class="text-gray-300" aria-current="page">Mentions légales</li>
+          </ol>
+        </nav>
+        <h1 class="font-heading font-black text-4xl sm:text-5xl text-white">Mentions légales</h1>
+        <p class="text-gray-400 mt-3 text-base">Informations légales relatives au site www.puechoultres.fr</p>
+      </Container>
+    </section>
+
+    <!-- Contenu -->
+    <section class="py-16 bg-gray-900">
+      <Container>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+          <!-- Sommaire -->
+          <aside class="lg:col-span-3 order-2 lg:order-1">
+            <div class="lg:sticky lg:top-28">
+              <p class="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-4">Sommaire</p>
+              <nav aria-label="Sommaire des mentions légales">
+                <ul class="flex flex-col gap-1">
+                  {sections.map(s => (
+                    <li>
+                      <a
+                        href={`#${s.id}`}
+                        class="block py-1.5 px-3 rounded-md text-sm text-gray-400 hover:text-white hover:bg-white/5 transition-colors duration-150 leading-snug"
+                      >
+                        {s.titre}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
+          </aside>
+
+          <!-- Texte -->
+          <div class="lg:col-span-9 order-1 lg:order-2">
+            <div class="flex flex-col gap-12">
+              {sections.map(s => (
+                <article id={s.id} class="scroll-mt-28">
+                  <h2 class="font-heading font-bold text-xl text-white mb-5 pb-3 border-b border-white/10">
+                    {s.titre}
+                  </h2>
+                  <div
+                    class="
+                      text-gray-300 text-sm leading-relaxed
+                      [&_p]:mb-4 [&_p:last-child]:mb-0
+                      [&_h4]:font-heading [&_h4]:font-semibold [&_h4]:text-white [&_h4]:text-base [&_h4]:mt-6 [&_h4]:mb-2
+                      [&_ul]:mb-4 [&_ul]:pl-5 [&_ul]:flex [&_ul]:flex-col [&_ul]:gap-1.5 [&_ul]:list-disc [&_ul]:marker:text-primary
+                      [&_li]:text-gray-400
+                      [&_strong]:text-gray-200 [&_strong]:font-medium
+                      [&_a]:text-primary [&_a]:hover:text-primary-light [&_a]:transition-colors [&_a]:underline [&_a]:underline-offset-2
+                    "
+                    set:html={s.contenu}
+                  />
+                </article>
+              ))}
+            </div>
+          </div>
+
+        </div>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,238 @@
+---
+interface ImageItem {
+  src:      string;
+  alt:      string;
+  caption?: string;
+}
+
+interface Props {
+  images:   ImageItem[];
+  title?:   string;
+  columns?: 2 | 3 | 4;
+}
+
+const { images, title = 'Photos de chantier', columns = 3 } = Astro.props;
+
+const gridCols: Record<number, string> = {
+  2: 'grid-cols-1 sm:grid-cols-2',
+  3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3',
+  4: 'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4',
+};
+
+// ID unique par instance pour isoler les groupes lightbox
+const groupId = `gallery-${Math.random().toString(36).slice(2, 7)}`;
+---
+
+{images.length > 0 && (
+  <section class="py-16 bg-gray-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <div class="mb-8">
+        <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white title-underline">
+          {title}
+        </h2>
+      </div>
+
+      <div class:list={['grid gap-4', gridCols[columns]]}>
+        {images.map((img, i) => (
+          <figure
+            class="group flex flex-col overflow-hidden rounded-card border border-white/5 hover:border-primary/30 transition-all duration-300 bg-white/[0.02] cursor-zoom-in"
+            data-lightbox-group={groupId}
+            data-lightbox-index={i}
+            data-lightbox-src={img.src}
+            data-lightbox-alt={img.alt}
+            data-lightbox-caption={img.caption ?? ''}
+            tabindex="0"
+            role="button"
+            aria-label={`Agrandir : ${img.caption ?? img.alt}`}
+          >
+            <div class="relative overflow-hidden aspect-[4/3] shrink-0">
+              <img
+                src={img.src}
+                alt={img.alt}
+                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                loading={i < 3 ? 'eager' : 'lazy'}
+              />
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-colors duration-300 flex items-center justify-center pointer-events-none">
+                <div class="opacity-0 group-hover:opacity-100 transition-opacity duration-200">
+                  <div class="w-9 h-9 rounded-full bg-white/20 backdrop-blur-sm border border-white/30 flex items-center justify-center">
+                    <svg class="w-4 h-4 text-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                      <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                      <line x1="11" y1="8" x2="11" y2="14"/><line x1="8" y1="11" x2="14" y2="11"/>
+                    </svg>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            {img.caption && (
+              <figcaption class="px-4 py-3 text-xs text-gray-400 leading-snug border-t border-white/5 pointer-events-none">
+                {img.caption}
+              </figcaption>
+            )}
+          </figure>
+        ))}
+      </div>
+
+    </div>
+  </section>
+)}
+
+<!-- ═══ LIGHTBOX (dialog natif) ═══ -->
+<dialog
+  id="lightbox"
+  class="fixed inset-0 z-[200] w-full h-full max-w-none max-h-none m-0 p-0 bg-transparent border-none outline-none backdrop:bg-black/90"
+  aria-modal="true"
+  aria-label="Visionneuse de photos"
+>
+  <div class="relative w-full h-full flex flex-col items-center justify-center px-4 py-16" id="lightbox-inner">
+
+    <!-- Fermer -->
+    <button
+      id="lb-close"
+      class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-colors duration-150"
+      aria-label="Fermer"
+    >
+      <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/>
+      </svg>
+    </button>
+
+    <!-- Compteur -->
+    <div id="lb-counter" class="absolute top-4 left-4 text-xs text-gray-400 font-mono bg-black/40 px-2 py-1 rounded-md" />
+
+    <!-- Flèche gauche -->
+    <button
+      id="lb-prev"
+      class="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-colors duration-150 disabled:opacity-20 disabled:cursor-default"
+      aria-label="Image précédente"
+    >
+      <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="15 18 9 12 15 6"/>
+      </svg>
+    </button>
+
+    <!-- Image principale -->
+    <div class="relative flex items-center justify-center w-full h-full">
+      <img
+        id="lb-img"
+        src=""
+        alt=""
+        class="max-w-full max-h-full object-contain rounded-lg shadow-2xl select-none"
+        draggable="false"
+      />
+    </div>
+
+    <!-- Flèche droite -->
+    <button
+      id="lb-next"
+      class="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 w-11 h-11 rounded-full bg-white/10 hover:bg-white/20 border border-white/20 flex items-center justify-center text-white transition-colors duration-150 disabled:opacity-20 disabled:cursor-default"
+      aria-label="Image suivante"
+    >
+      <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+        <polyline points="9 18 15 12 9 6"/>
+      </svg>
+    </button>
+
+    <!-- Légende -->
+    <div
+      id="lb-caption"
+      class="absolute bottom-4 left-1/2 -translate-x-1/2 w-full max-w-xl text-center text-sm text-gray-300 bg-black/50 backdrop-blur-sm rounded-lg px-4 py-2 leading-snug"
+    />
+
+  </div>
+</dialog>
+
+<script>
+(function () {
+  // ── Éviter de ré-initialiser si déjà fait (plusieurs instances Gallery sur la page)
+  if ((window as any).__lbInit) return;
+  (window as any).__lbInit = true;
+
+  const dialog  = document.getElementById('lightbox')    as HTMLDialogElement;
+  const lbImg   = document.getElementById('lb-img')      as HTMLImageElement;
+  const lbCap   = document.getElementById('lb-caption')  as HTMLElement;
+  const lbCount = document.getElementById('lb-counter')  as HTMLElement;
+  const lbPrev  = document.getElementById('lb-prev')     as HTMLButtonElement;
+  const lbNext  = document.getElementById('lb-next')     as HTMLButtonElement;
+  const lbClose = document.getElementById('lb-close')    as HTMLButtonElement;
+
+  let items:  { src: string; alt: string; caption: string }[] = [];
+  let current = 0;
+
+  function show(index: number) {
+    current = Math.max(0, Math.min(index, items.length - 1));
+    const item = items[current];
+    lbImg.src = item.src;
+    lbImg.alt = item.alt;
+    lbCap.textContent = item.caption;
+    lbCap.style.display = item.caption ? '' : 'none';
+    lbCount.textContent = `${current + 1} / ${items.length}`;
+    lbPrev.disabled = current === 0;
+    lbNext.disabled = current === items.length - 1;
+  }
+
+  function open(group: string, index: number) {
+    const figures = document.querySelectorAll<HTMLElement>(`[data-lightbox-group="${group}"]`);
+    items = Array.from(figures).map(el => ({
+      src:     el.dataset.lightboxSrc     ?? '',
+      alt:     el.dataset.lightboxAlt     ?? '',
+      caption: el.dataset.lightboxCaption ?? '',
+    }));
+    show(index);
+    dialog.showModal();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function close() {
+    dialog.close();
+    document.body.style.overflow = '';
+    lbImg.src = '';
+  }
+
+  // ── Délégation de clic sur toutes les figures gallery
+  document.addEventListener('click', (e) => {
+    const fig = (e.target as HTMLElement).closest<HTMLElement>('[data-lightbox-group]');
+    if (!fig) return;
+    open(fig.dataset.lightboxGroup!, Number(fig.dataset.lightboxIndex));
+  });
+
+  // ── Accessibilité clavier sur les figures
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') {
+      const fig = (e.target as HTMLElement).closest<HTMLElement>('[data-lightbox-group]');
+      if (fig) {
+        e.preventDefault();
+        open(fig.dataset.lightboxGroup!, Number(fig.dataset.lightboxIndex));
+      }
+    }
+  });
+
+  // ── Contrôles lightbox
+  lbPrev.addEventListener('click',  () => show(current - 1));
+  lbNext.addEventListener('click',  () => show(current + 1));
+  lbClose.addEventListener('click', close);
+
+  // ── Fermer en cliquant sur le fond
+  dialog.addEventListener('click', (e) => {
+    if (e.target === dialog) close();
+  });
+
+  // ── Clavier : flèches + Escape
+  dialog.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape')     close();
+    if (e.key === 'ArrowLeft')  show(current - 1);
+    if (e.key === 'ArrowRight') show(current + 1);
+  });
+
+  // ── Swipe tactile
+  let touchStartX = 0;
+  dialog.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  }, { passive: true });
+  dialog.addEventListener('touchend', (e) => {
+    const delta = touchStartX - e.changedTouches[0].clientX;
+    if (Math.abs(delta) > 50) delta > 0 ? show(current + 1) : show(current - 1);
+  }, { passive: true });
+})();
+</script>

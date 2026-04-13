@@ -1,0 +1,294 @@
+---
+import Container from '../ui/Container.astro';
+
+const services = [
+  { label: 'Travaux publics',       href: '/services/travaux-publics' },
+  { label: 'Transport',             href: '/services/transport' },
+  { label: 'Béton prêt à l\'emploi', href: '/services/beton-pret-emploi' },
+  { label: 'Désamiantage',          href: '/services/desamiantage' },
+  { label: 'Goudronnage',           href: '/services/goudronnage' },
+  { label: 'Démolition',            href: '/services/demolition' },
+  { label: 'Voirie et réseaux',     href: '/services/voirie-reseaux' },
+  { label: 'Location',              href: '/services/location' },
+  { label: 'Assainissement',        href: '/services/assainissement' },
+  { label: 'Recyclage',             href: '/services/recyclage' },
+  { label: 'Levage',                href: '/services/levage' },
+  { label: 'Aménagement extérieur', href: '/services/amenagement-exterieur' },
+];
+
+const navLinks = [
+  { label: 'Accueil',       href: '/' },
+  { label: 'Présentation',  href: '/presentation' },
+  { label: 'Événements',    href: '/nos-evenements' },
+  { label: 'Emploi',        href: '/offres-d-emploi' },
+  { label: 'Contact',       href: '/nous-contacter' },
+];
+
+const currentPath = Astro.url.pathname;
+---
+
+<!-- ===== HEADER ===== -->
+<header
+  id="header"
+  class="sticky top-0 z-50 h-20 transition-all duration-300 ease-[cubic-bezier(0,0,0.2,1)] bg-black/30 backdrop-blur-glass border-b border-white/10"
+>
+  <Container class="h-full flex items-center justify-between">
+
+    <!-- Logo -->
+    <a
+      href="/"
+      class="font-heading font-bold text-xl tracking-wide text-white hover:text-primary transition-colors duration-[250ms]"
+      aria-label="Puech Oultres — retour à l'accueil"
+    >
+      Puechoultres
+    </a>
+
+    <!-- ===== NAV DESKTOP ===== -->
+    <nav aria-label="Navigation principale" class="hidden lg:flex items-center gap-7">
+
+      {navLinks.slice(0, 2).map(link => (
+        <a
+          href={link.href}
+          class:list={[
+            'relative text-sm font-medium text-white transition-colors duration-[250ms]',
+            'after:absolute after:bottom-[-3px] after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-[width] after:duration-[250ms]',
+            'hover:text-primary hover:after:w-full',
+            currentPath === link.href && 'text-primary font-semibold after:w-full',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+
+      <!-- Dropdown Services -->
+      <div class="group relative">
+        <button
+          class:list={[
+            'flex items-center gap-1 text-sm font-medium text-white transition-colors duration-[250ms]',
+            'hover:text-primary',
+            currentPath.startsWith('/services') && 'text-primary font-semibold',
+          ]}
+          aria-haspopup="true"
+          aria-expanded="false"
+        >
+          Services
+          <!-- Chevron down -->
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            class="w-4 h-4 transition-transform duration-[250ms] group-hover:rotate-180"
+            viewBox="0 0 24 24" fill="none" stroke="currentColor"
+            stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </svg>
+        </button>
+
+        <!-- Dropdown panel -->
+        <div
+          class="absolute top-full left-1/2 -translate-x-1/2 pt-3 invisible opacity-0 group-hover:visible group-hover:opacity-100 transition-all duration-200 pointer-events-none group-hover:pointer-events-auto"
+        >
+          <div class="bg-gray-950 border border-white/10 rounded-card p-3 grid grid-cols-2 gap-1 min-w-[440px] shadow-nav ring-1 ring-black/20">
+            {services.map(service => (
+              <a
+                href={service.href}
+                class="px-3 py-2 rounded-lg text-sm text-gray-300 hover:text-white hover:bg-white/10 transition-colors duration-[150ms] whitespace-nowrap"
+              >
+                {service.label}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {navLinks.slice(2).map(link => (
+        <a
+          href={link.href}
+          class:list={[
+            'relative text-sm font-medium text-white transition-colors duration-[250ms]',
+            'after:absolute after:bottom-[-3px] after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-[width] after:duration-[250ms]',
+            'hover:text-primary hover:after:w-full',
+            currentPath === link.href && 'text-primary font-semibold after:w-full',
+          ]}
+        >
+          {link.label}
+        </a>
+      ))}
+
+    </nav>
+
+    <!-- Burger (mobile) -->
+    <button
+      id="burger"
+      class="lg:hidden flex flex-col justify-center items-center w-10 h-10 gap-[5px] rounded-lg hover:bg-white/10 transition-colors"
+      aria-label="Ouvrir le menu"
+      aria-expanded="false"
+      aria-controls="mobile-menu"
+    >
+      <span id="burger-top"    class="block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+      <span id="burger-mid"    class="block w-6 h-0.5 bg-white transition-all duration-300"></span>
+      <span id="burger-bottom" class="block w-6 h-0.5 bg-white transition-all duration-300 origin-center"></span>
+    </button>
+
+  </Container>
+</header>
+
+<!-- ===== MENU MOBILE (overlay plein écran) ===== -->
+<div
+  id="mobile-menu"
+  class="fixed inset-0 z-40 bg-secondary flex flex-col translate-x-full transition-transform duration-300 ease-[cubic-bezier(0,0,0.2,1)]"
+  aria-hidden="true"
+>
+  <!-- En-tête overlay -->
+  <div class="flex items-center justify-between h-20 px-4 border-b border-white/10">
+    <a href="/" class="font-heading font-bold text-xl text-white" onclick="closeMobileMenu()">
+      Puech Oultres
+    </a>
+    <button
+      onclick="closeMobileMenu()"
+      class="w-10 h-10 flex items-center justify-center rounded-lg hover:bg-white/10 transition-colors text-white"
+      aria-label="Fermer le menu"
+    >
+      <!-- X icon -->
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none"
+           stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <line x1="18" y1="6" x2="6" y2="18" />
+        <line x1="6" y1="6" x2="18" y2="18" />
+      </svg>
+    </button>
+  </div>
+
+  <!-- Liens -->
+  <nav class="flex-1 overflow-y-auto py-6 px-4 flex flex-col gap-1" aria-label="Menu mobile">
+    {navLinks.slice(0, 2).map(link => (
+      <a
+        href={link.href}
+        class="px-4 py-3 rounded-lg text-white font-medium hover:bg-white/10 hover:text-primary transition-colors"
+      >
+        {link.label}
+      </a>
+    ))}
+
+    <!-- Services accordéon mobile -->
+    <div>
+      <button
+        id="services-toggle"
+        class="w-full flex items-center justify-between px-4 py-3 rounded-lg text-white font-medium hover:bg-white/10 transition-colors"
+        aria-expanded="false"
+      >
+        Services
+        <svg
+          id="services-chevron"
+          xmlns="http://www.w3.org/2000/svg"
+          class="w-4 h-4 transition-transform duration-300"
+          viewBox="0 0 24 24" fill="none" stroke="currentColor"
+          stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+        >
+          <polyline points="6 9 12 15 18 9" />
+        </svg>
+      </button>
+      <div id="services-list" class="hidden pl-4 flex-col gap-1 mt-1">
+        {services.map(service => (
+          <a
+            href={service.href}
+            class="px-4 py-2.5 rounded-lg text-gray-300 hover:text-white hover:bg-white/10 transition-colors text-sm"
+          >
+            {service.label}
+          </a>
+        ))}
+      </div>
+    </div>
+
+    {navLinks.slice(2).map(link => (
+      <a
+        href={link.href}
+        class="px-4 py-3 rounded-lg text-white font-medium hover:bg-white/10 hover:text-primary transition-colors"
+      >
+        {link.label}
+      </a>
+    ))}
+  </nav>
+</div>
+
+<!-- Backdrop cliquable -->
+<div
+  id="mobile-backdrop"
+  class="fixed inset-0 z-30 bg-black/50 hidden"
+  onclick="closeMobileMenu()"
+  aria-hidden="true"
+></div>
+
+<script>
+  const header       = document.getElementById('header')!;
+  const burger       = document.getElementById('burger')!;
+  const mobileMenu   = document.getElementById('mobile-menu')!;
+  const backdrop     = document.getElementById('mobile-backdrop')!;
+  const burgerTop    = document.getElementById('burger-top')!;
+  const burgerMid    = document.getElementById('burger-mid')!;
+  const burgerBottom = document.getElementById('burger-bottom')!;
+  const servicesToggle = document.getElementById('services-toggle')!;
+  const servicesList   = document.getElementById('services-list')!;
+  const servicesChevron = document.getElementById('services-chevron')!;
+
+  // ---- Scroll : transparent → solide ----
+  const SCROLLED = ['bg-secondary', '!border-transparent', 'shadow-nav'];
+  const INITIAL  = ['bg-black/30', 'backdrop-blur-glass', 'border-white/10'];
+
+  function onScroll() {
+    if (window.scrollY > 100) {
+      header.classList.add(...SCROLLED);
+      header.classList.remove(...INITIAL);
+    } else {
+      header.classList.remove(...SCROLLED);
+      header.classList.add(...INITIAL);
+    }
+  }
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // ---- Menu mobile ----
+  function openMobileMenu() {
+    mobileMenu.classList.remove('translate-x-full');
+    backdrop.classList.remove('hidden');
+    burger.setAttribute('aria-expanded', 'true');
+    mobileMenu.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+
+    burgerTop.classList.add('rotate-45', 'translate-y-[6.5px]');
+    burgerMid.classList.add('opacity-0', 'scale-x-0');
+    burgerBottom.classList.add('-rotate-45', '-translate-y-[6.5px]');
+  }
+
+  function closeMobileMenu() {
+    mobileMenu.classList.add('translate-x-full');
+    backdrop.classList.add('hidden');
+    burger.setAttribute('aria-expanded', 'false');
+    mobileMenu.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+
+    burgerTop.classList.remove('rotate-45', 'translate-y-[6.5px]');
+    burgerMid.classList.remove('opacity-0', 'scale-x-0');
+    burgerBottom.classList.remove('-rotate-45', '-translate-y-[6.5px]');
+  }
+
+  // Expose closeMobileMenu aux onclick inline dans le template
+  (window as any).closeMobileMenu = closeMobileMenu;
+
+  burger.addEventListener('click', () => {
+    const isOpen = burger.getAttribute('aria-expanded') === 'true';
+    isOpen ? closeMobileMenu() : openMobileMenu();
+  });
+
+  // Fermer avec Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeMobileMenu();
+  });
+
+  // ---- Accordéon Services (mobile) ----
+  servicesToggle.addEventListener('click', () => {
+    const isOpen = servicesToggle.getAttribute('aria-expanded') === 'true';
+    servicesToggle.setAttribute('aria-expanded', String(!isOpen));
+    servicesList.classList.toggle('hidden');
+    servicesList.classList.toggle('flex');
+    servicesChevron.classList.toggle('rotate-180');
+  });
+</script>

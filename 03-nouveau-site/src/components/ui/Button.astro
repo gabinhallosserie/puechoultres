@@ -1,0 +1,64 @@
+---
+interface Props {
+  variant?: 'primary' | 'secondary' | 'outline';
+  size?: 'sm' | 'md' | 'lg';
+  href?: string;
+  class?: string;
+  [key: string]: unknown;
+}
+
+const {
+  variant = 'primary',
+  size = 'md',
+  href,
+  class: className,
+  ...rest
+} = Astro.props;
+
+const base = 'inline-flex items-center justify-center font-semibold rounded-btn transition-all duration-[250ms] ease-[cubic-bezier(0,0,0.2,1)] will-change-transform focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary';
+
+const variants = {
+  primary: [
+    'bg-gradient-to-br from-primary to-primary-dark text-white',
+    'shadow-btn',
+    'hover:-translate-y-0.5 hover:shadow-btn-hover hover:from-primary-light hover:to-primary',
+    'focus-visible:outline-primary',
+  ].join(' '),
+
+  secondary: [
+    'bg-accent text-white',
+    'shadow-[0_4px_12px_rgba(249,115,22,0.3)]',
+    'hover:-translate-y-0.5 hover:bg-accent-light hover:shadow-[0_8px_20px_rgba(249,115,22,0.4)]',
+    'focus-visible:outline-accent',
+  ].join(' '),
+
+  outline: [
+    'bg-transparent border-2 border-white text-white',
+    'hover:-translate-y-0.5 hover:bg-white/10',
+    'focus-visible:outline-white',
+  ].join(' '),
+};
+
+const sizes = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-8 py-4 text-base',
+  lg: 'px-10 py-5 text-lg',
+};
+---
+
+{href ? (
+  <a
+    href={href}
+    class:list={[base, variants[variant], sizes[size], className]}
+    {...rest}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    class:list={[base, variants[variant], sizes[size], className]}
+    {...rest}
+  >
+    <slot />
+  </button>
+)}

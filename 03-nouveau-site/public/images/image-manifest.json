@@ -1,0 +1,266 @@
+{
+  "generated": "2026-04-13T10:21:52.652Z",
+  "images": {
+    "img-1.png": {
+      "src": "/images/img-1.png",
+      "width": 600,
+      "height": 193,
+      "size": 35719,
+      "sizeHuman": "34.9 KB"
+    },
+    "img-11.jpeg": {
+      "src": "/images/img-11.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 2441,
+      "sizeHuman": "2.4 KB"
+    },
+    "img-12.jpeg": {
+      "src": "/images/img-12.jpeg",
+      "width": 100,
+      "height": 77,
+      "size": 2628,
+      "sizeHuman": "2.6 KB"
+    },
+    "img-14.jpeg": {
+      "src": "/images/img-14.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 2319,
+      "sizeHuman": "2.3 KB"
+    },
+    "img-16.jpeg": {
+      "src": "/images/img-16.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 2409,
+      "sizeHuman": "2.4 KB"
+    },
+    "img-17.jpeg": {
+      "src": "/images/img-17.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 2251,
+      "sizeHuman": "2.2 KB"
+    },
+    "img-18.jpeg": {
+      "src": "/images/img-18.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 2632,
+      "sizeHuman": "2.6 KB"
+    },
+    "img-19.jpeg": {
+      "src": "/images/img-19.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 2987,
+      "sizeHuman": "2.9 KB"
+    },
+    "img-2.png": {
+      "src": "/images/img-2.png",
+      "width": 100,
+      "height": 32,
+      "size": 4517,
+      "sizeHuman": "4.4 KB"
+    },
+    "img-20.png": {
+      "src": "/images/img-20.png",
+      "width": 1907,
+      "height": 436,
+      "size": 34214,
+      "sizeHuman": "33.4 KB"
+    },
+    "img-21.jpeg": {
+      "src": "/images/img-21.jpeg",
+      "width": 100,
+      "height": 57,
+      "size": 2344,
+      "sizeHuman": "2.3 KB"
+    },
+    "img-22.jpeg": {
+      "src": "/images/img-22.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 2256,
+      "sizeHuman": "2.2 KB"
+    },
+    "img-23.jpeg": {
+      "src": "/images/img-23.jpeg",
+      "width": 100,
+      "height": 133,
+      "size": 3214,
+      "sizeHuman": "3.1 KB"
+    },
+    "img-24.jpeg": {
+      "src": "/images/img-24.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 2302,
+      "sizeHuman": "2.2 KB"
+    },
+    "img-26.png": {
+      "src": "/images/img-26.png",
+      "width": 100,
+      "height": 35,
+      "size": 5428,
+      "sizeHuman": "5.3 KB"
+    },
+    "img-27.jpeg": {
+      "src": "/images/img-27.jpeg",
+      "width": 100,
+      "height": 48,
+      "size": 2090,
+      "sizeHuman": "2.0 KB"
+    },
+    "img-28.jpeg": {
+      "src": "/images/img-28.jpeg",
+      "width": 100,
+      "height": 75,
+      "size": 37973,
+      "sizeHuman": "37.1 KB"
+    },
+    "img-3.jpeg": {
+      "src": "/images/img-3.jpeg",
+      "width": 100,
+      "height": 66,
+      "size": 1782,
+      "sizeHuman": "1.7 KB"
+    },
+    "img-5.jpeg": {
+      "src": "/images/img-5.jpeg",
+      "width": 100,
+      "height": 66,
+      "size": 1948,
+      "sizeHuman": "1.9 KB"
+    },
+    "img-6.jpeg": {
+      "src": "/images/img-6.jpeg",
+      "width": 100,
+      "height": 67,
+      "size": 1642,
+      "sizeHuman": "1.6 KB"
+    },
+    "img-7.jpeg": {
+      "src": "/images/img-7.jpeg",
+      "width": 100,
+      "height": 67,
+      "size": 1973,
+      "sizeHuman": "1.9 KB"
+    },
+    "hero-amenagement.jpg": {
+      "src": "/images/hero-amenagement.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-assainissement.jpg": {
+      "src": "/images/hero-assainissement.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-beton.jpg": {
+      "src": "/images/hero-beton.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-btp.jpg": {
+      "src": "/images/hero-btp.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-demolition.jpg": {
+      "src": "/images/hero-demolition.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-desamiantage.jpg": {
+      "src": "/images/hero-desamiantage.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-engins.jpg": {
+      "src": "/images/hero-engins.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-goudronnage.jpg": {
+      "src": "/images/hero-goudronnage.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-levage.jpg": {
+      "src": "/images/hero-levage.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-location.jpg": {
+      "src": "/images/hero-location.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-recyclage.jpg": {
+      "src": "/images/hero-recyclage.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-transport.jpg": {
+      "src": "/images/hero-transport.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-travaux-publics.jpg": {
+      "src": "/images/hero-travaux-publics.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    },
+    "hero-voirie.jpg": {
+      "src": "/images/hero-voirie.jpg",
+      "width": 1920,
+      "height": 1080,
+      "sizeHuman": "placeholder",
+      "placeholder": true
+    }
+  },
+  "missing_heroes": [
+    "/images/hero-amenagement.jpg",
+    "/images/hero-assainissement.jpg",
+    "/images/hero-beton.jpg",
+    "/images/hero-btp.jpg",
+    "/images/hero-demolition.jpg",
+    "/images/hero-desamiantage.jpg",
+    "/images/hero-engins.jpg",
+    "/images/hero-goudronnage.jpg",
+    "/images/hero-levage.jpg",
+    "/images/hero-location.jpg",
+    "/images/hero-recyclage.jpg",
+    "/images/hero-transport.jpg",
+    "/images/hero-travaux-publics.jpg",
+    "/images/hero-voirie.jpg"
+  ]
+}

@@ -1,0 +1,291 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Container from '../components/ui/Container.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
+import Button from '../components/ui/Button.astro';
+import Animate from '../components/react/ScrollAnimations';
+import CandidatureForm from '../components/react/CandidatureForm';
+
+const page = {
+  title: 'Offres d\'emploi',
+  description: 'Rejoignez l\'équipe Puechoultres & Fils. Offres d\'emploi BTP en Aveyron : chauffeurs PL/SPL, conducteurs d\'engins, chefs de chantier, ouvriers TP. Candidature spontanée bienvenue.',
+};
+
+type Offre = {
+  titre: string;
+  contrat: 'CDI' | 'CDD' | 'Alternance' | 'Intérim';
+  lieu: string;
+  description: string;
+  competences: string[];
+  publiee: string; // ISO 8601
+};
+
+// Alimenter ce tableau pour afficher des offres
+const offres: Offre[] = [];
+
+const avantages = [
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    titre: 'Équipe soudée',
+    desc: '47 collaborateurs qui partagent un vrai esprit d\'équipe depuis près de 50 ans. Une ambiance de travail familiale et bienveillante.',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+    titre: 'Chantiers variés',
+    desc: 'Terrassement, VRD, démolition, désamiantage, transport, levage… vous ne ferez jamais deux fois le même chantier.',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>',
+    titre: 'Stabilité & CDI',
+    desc: 'Nous privilégions les contrats longue durée. La majorité de nos effectifs sont en CDI avec une ancienneté moyenne élevée.',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>',
+    titre: 'Matériel récent',
+    desc: 'Parc de plus de 100 engins entretenu dans notre atelier de Baraqueville. Vous travaillerez avec du matériel fiable et bien maintenu.',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    titre: 'Sécurité prioritaire',
+    desc: 'Un ingénieur QSE et un responsable sécurité dédiés. Formation continue, équipements aux normes et culture de la prévention.',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>',
+    titre: 'Ancrage local',
+    desc: 'Basés à Baraqueville depuis 1976. Nos chantiers se situent principalement en Aveyron, vous rentrez chez vous chaque soir.',
+  },
+];
+
+const contratColors: Record<string, string> = {
+  CDI:        'bg-green-500/10 text-green-400 border-green-500/20',
+  CDD:        'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  Alternance: 'bg-purple-500/10 text-purple-400 border-purple-500/20',
+  Intérim:    'bg-orange-500/10 text-orange-400 border-orange-500/20',
+};
+
+function timeAgo(iso: string): string {
+  const diff = Math.floor((Date.now() - new Date(iso).getTime()) / 86400000);
+  if (diff === 0) return 'Aujourd\'hui';
+  if (diff === 1) return 'Hier';
+  if (diff < 30) return `Il y a ${diff} jours`;
+  return `Il y a ${Math.floor(diff / 30)} mois`;
+}
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <!-- Hero -->
+    <section class="relative pt-32 pb-20 overflow-hidden bg-gray-950">
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-primary/10" aria-hidden="true" />
+      <div class="absolute top-1/2 left-0 w-[500px] h-[500px] bg-primary/5 rounded-full blur-3xl pointer-events-none -translate-x-1/2 -translate-y-1/2" aria-hidden="true" />
+      <Container class="relative z-10">
+        <Animate animation="slideUp" client:visible>
+          <nav aria-label="Fil d'Ariane" class="mb-8">
+            <ol class="flex items-center gap-2 text-sm text-gray-500">
+              <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+              <li aria-hidden="true" class="text-gray-700">/</li>
+              <li class="text-gray-300" aria-current="page">Offres d'emploi</li>
+            </ol>
+          </nav>
+          <div class="max-w-2xl">
+            <p class="text-primary font-medium text-sm uppercase tracking-widest mb-4">Rejoignez-nous</p>
+            <h1 class="font-heading font-black text-4xl sm:text-6xl text-white leading-tight mb-5">
+              Construisons<br class="hidden sm:block" />ensemble
+            </h1>
+            <p class="text-gray-300 text-xl leading-relaxed mb-8">
+              Puechoultres & Fils recrute des professionnels du BTP passionnés par leur métier. Rejoignez une équipe familiale de 47 collaborateurs au cœur de l'Aveyron.
+            </p>
+            <div class="flex flex-wrap gap-4">
+              <Button href="#offres" variant="primary" size="lg">Voir les offres</Button>
+              <Button href="#candidature" variant="outline" size="lg">Candidature spontanée</Button>
+            </div>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+    <!-- Pourquoi nous rejoindre -->
+    <section class="py-20 bg-gray-900">
+      <Container>
+        <Animate animation="slideUp" client:visible>
+          <div class="text-center mb-14">
+            <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-4">Pourquoi nous rejoindre ?</h2>
+            <p class="text-gray-400 text-lg max-w-xl mx-auto">Une entreprise familiale où le savoir-faire se transmet et les collaborateurs s'épanouissent.</p>
+          </div>
+        </Animate>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {avantages.map((a, i) => (
+            <Animate animation="slideUp" delay={i * 0.08} className="h-full" client:visible>
+              <GlassCard class="flex flex-col gap-4 h-full">
+                <div class="w-11 h-11 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                  <div class="w-5 h-5" set:html={a.icon} />
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-heading font-bold text-base text-white mb-2">{a.titre}</h3>
+                  <p class="text-gray-400 text-sm leading-relaxed">{a.desc}</p>
+                </div>
+              </GlassCard>
+            </Animate>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <!-- Liste des offres -->
+    <section id="offres" class="py-20 bg-gray-950 scroll-mt-20">
+      <Container>
+        <Animate animation="slideUp" client:visible>
+          <div class="flex items-center justify-between gap-4 mb-10">
+            <h2 class="font-heading font-black text-3xl sm:text-4xl text-white">
+              Offres en cours
+              {offres.length > 0 && (
+                <span class="ml-3 inline-flex items-center justify-center w-8 h-8 rounded-full bg-primary text-white text-sm font-bold">{offres.length}</span>
+              )}
+            </h2>
+          </div>
+        </Animate>
+
+        {offres.length > 0 ? (
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {offres.map((offre, i) => (
+              <Animate animation="slideUp" delay={i * 0.1} client:visible>
+                <GlassCard class="flex flex-col gap-4 h-full">
+                  <div class="flex items-start justify-between gap-3">
+                    <div class="flex flex-wrap gap-2">
+                      <span class:list={['inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold border', contratColors[offre.contrat]]}>
+                        {offre.contrat}
+                      </span>
+                      <span class="inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs text-gray-400 bg-white/5 border border-white/10">
+                        <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                        {offre.lieu}
+                      </span>
+                    </div>
+                    <span class="text-xs text-gray-600 shrink-0 mt-1">{timeAgo(offre.publiee)}</span>
+                  </div>
+
+                  <h3 class="font-heading font-bold text-xl text-white leading-snug">{offre.titre}</h3>
+                  <p class="text-gray-400 text-sm leading-relaxed flex-1">{offre.description}</p>
+
+                  {offre.competences.length > 0 && (
+                    <div class="flex flex-wrap gap-2">
+                      {offre.competences.map(c => (
+                        <span class="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-400 text-xs">{c}</span>
+                      ))}
+                    </div>
+                  )}
+
+                  <a
+                    href="#candidature"
+                    class="inline-flex items-center gap-2 px-4 py-2.5 rounded-btn bg-gradient-to-r from-primary to-primary-dark text-white font-semibold text-sm shadow-btn hover:shadow-btn-hover hover:-translate-y-0.5 transition-all duration-200 self-start mt-1"
+                  >
+                    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    Postuler
+                  </a>
+                </GlassCard>
+              </Animate>
+            ))}
+          </div>
+        ) : (
+          <Animate animation="slideUp" client:visible>
+            <div class="flex flex-col items-center justify-center text-center py-16 gap-5 rounded-card border border-white/10 bg-white/[0.02]">
+              <div class="w-16 h-16 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center">
+                <svg class="w-7 h-7 text-gray-600" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                  <rect x="2" y="7" width="20" height="14" rx="2" ry="2"/>
+                  <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/>
+                </svg>
+              </div>
+              <div>
+                <h3 class="font-heading font-bold text-xl text-white mb-2">Aucune offre en ce moment</h3>
+                <p class="text-gray-400 text-sm leading-relaxed max-w-md">
+                  Nous n'avons pas de poste ouvert actuellement, mais nous étudions toutes les candidatures spontanées avec attention.
+                </p>
+              </div>
+              <a
+                href="#candidature"
+                class="inline-flex items-center gap-2 text-sm text-primary hover:text-primary-light font-medium transition-colors"
+              >
+                Envoyer une candidature spontanée
+                <svg class="w-3.5 h-3.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+              </a>
+            </div>
+          </Animate>
+        )}
+      </Container>
+    </section>
+
+    <!-- Formulaire candidature spontanée -->
+    <section id="candidature" class="py-20 bg-gray-900 scroll-mt-20">
+      <Container>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10 items-start">
+
+          <!-- Intro -->
+          <div class="lg:col-span-4">
+            <Animate animation="slideLeft" client:visible>
+              <div class="lg:sticky lg:top-28">
+                <h2 class="font-heading font-black text-3xl text-white mb-4">Candidature<br />spontanée</h2>
+                <p class="text-gray-400 leading-relaxed mb-6">
+                  Votre profil ne correspond à aucune offre ? Envoyez-nous votre CV, nous gardons les dossiers des candidats sérieux pour nos prochains recrutements.
+                </p>
+                <ul class="flex flex-col gap-3">
+                  {[
+                    'Réponse garantie sous 15 jours',
+                    'Dossier conservé 2 ans',
+                    'Tous profils BTP étudiés',
+                    'Permis C/CE et CACES appréciés',
+                  ].map(item => (
+                    <li class="flex items-center gap-2.5 text-sm text-gray-400">
+                      <svg class="w-4 h-4 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Animate>
+          </div>
+
+          <!-- Formulaire -->
+          <div class="lg:col-span-8">
+            <Animate animation="slideRight" client:visible>
+              <!-- Champ caché Netlify pour la détection du formulaire (multipart) -->
+              <form name="candidature" data-netlify="true" data-netlify-honeypot="bot-field" enctype="multipart/form-data" hidden>
+                <input type="text" name="nom" />
+                <input type="email" name="email" />
+                <input type="tel" name="telephone" />
+                <select name="poste"></select>
+                <input type="file" name="cv" />
+                <textarea name="motivation"></textarea>
+                <input type="checkbox" name="rgpd" />
+              </form>
+              <GlassCard hover={false}>
+                <CandidatureForm client:load />
+              </GlassCard>
+            </Animate>
+          </div>
+
+        </div>
+      </Container>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #1F1F1F 0%, #3B0A0A 50%, #1F1F1F 100%);">
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" aria-hidden="true" />
+      <Container class="relative z-10 text-center">
+        <Animate animation="slideUp" client:visible>
+          <h2 class="font-heading font-black text-2xl sm:text-4xl text-white mb-4">Une question sur le recrutement ?</h2>
+          <p class="text-gray-300 text-lg max-w-xl mx-auto mb-8">Notre équipe est joignable du lundi au vendredi de 7h30 à 17h30.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href="/nous-contacter" variant="primary" size="lg">Contactez-nous</Button>
+            <Button href="tel:0565690270" variant="outline" size="lg">05 65 69 02 70</Button>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

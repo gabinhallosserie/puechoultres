@@ -1,0 +1,79 @@
+---
+import '../styles/global.css';
+import CallBar from '../components/ui/CallBar.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  image?: string;
+}
+
+const {
+  title,
+  description,
+  image = '/og-default.jpg',
+} = Astro.props;
+
+const siteUrl = 'https://www.puechoultres.fr';
+const canonicalUrl = new URL(Astro.url.pathname, siteUrl).toString();
+const ogImage = image.startsWith('http') ? image : new URL(image, siteUrl).toString();
+const fullTitle = `${title} | Puechoultres`;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Organization',
+  name: 'Puechoultres',
+  url: siteUrl,
+  logo: `${siteUrl}/logo.svg`,
+  description: 'Entreprise de travaux publics, BTP, transport, démolition et assainissement depuis 1975.',
+  telephone: '+33 0 00 00 00 00',
+  address: {
+    '@type': 'PostalAddress',
+    addressCountry: 'FR',
+  },
+  sameAs: [],
+};
+---
+
+<!DOCTYPE html>
+<html lang="fr" class="scroll-smooth">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- SEO -->
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Puech Oultres" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="fr_FR" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+
+    <!-- Schema.org JSON-LD -->
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+
+  <body class="font-sans bg-gray-900 text-gray-100 antialiased pb-[72px] lg:pb-0">
+    <slot />
+    <CallBar />
+  </body>
+</html>

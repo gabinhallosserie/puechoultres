@@ -1,0 +1,217 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Container from '../../components/ui/Container.astro';
+import GlassCard from '../../components/ui/GlassCard.astro';
+import Button from '../../components/ui/Button.astro';
+import Animate from '../../components/react/ScrollAnimations';
+import Gallery from '../../components/ui/Gallery.astro';
+
+const gallery = [
+  { src: '/images/levage-01.jpg', alt: 'Levage de supports d\'un viaduc', caption: 'Levage de supports d\'un viaduc' },
+  { src: '/images/levage-02.jpg', alt: 'Levage d\'une lame de bulldozer D 10 CAT', caption: 'Levage d\'une lame de bulldozer D 10 CAT' },
+  { src: '/images/levage-03.jpg', alt: 'Levage d\'une moissonneuse-batteuse (10 Tonnes)', caption: 'Levage d\'une moissonneuse-batteuse (10 Tonnes)' },
+  { src: '/images/levage-04.jpg', alt: 'Levage de mur préfabriqué', caption: 'Levage de mur préfabriqué' },
+  { src: '/images/levage-05.jpg', alt: 'Levage d\'une vis à ciment', caption: 'Levage d\'une vis à ciment' }
+];
+
+const page = {
+  title: 'Levage et manutention',
+  description: 'Puechoultres & Fils propose des solutions de levage en Aveyron : nacelles électrique et diesel, télescopiques rotatifs jusqu\'à 21 m et grue automotrice 30 t.',
+  hero: '/images/hero-levage.jpg',
+};
+
+const materiels = [
+  {
+    title: 'Nacelles',
+    items: [
+      'Nacelle électrique intérieure (8 m)',
+      'Nacelle diesel extérieure (12 m)',
+    ],
+  },
+  {
+    title: 'Télescopiques',
+    items: [
+      'Télescopique (12 m)',
+      'Télescopique rotatif (21 m, 3 t)',
+    ],
+  },
+  {
+    title: 'Grue',
+    items: [
+      'Grue automotrice (30 t)',
+      'Opérateur qualifié inclus',
+    ],
+  },
+];
+
+const prestations = [
+  'Levage de charges lourdes jusqu\'à 30 t',
+  'Travaux en hauteur avec nacelles',
+  'Manutention sur chantiers BTP',
+  'Pose de charpentes et éléments préfabriqués',
+  'Levage de machines industrielles',
+  'Interventions sur ouvrages d\'art',
+  'Location avec opérateur qualifié',
+  'Montage et démontage de structures',
+];
+
+const autresServices = [
+  { label: 'Location',          href: '/services/location' },
+  { label: 'Travaux publics',   href: '/services/travaux-publics' },
+  { label: 'Démolition',        href: '/services/demolition' },
+  { label: 'Transport',         href: '/services/transport' },
+  { label: 'Voirie et réseaux', href: '/services/voirie-et-reseaux' },
+  { label: 'Assainissement',    href: '/services/assainissement' },
+];
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <section class="relative h-72 sm:h-96 flex items-end overflow-hidden">
+      <img src={page.hero} alt="Levage et manutention Puech Oultres" class="absolute inset-0 w-full h-full object-cover object-center" loading="eager" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+      <Container class="relative z-10 pb-8 sm:pb-12">
+        <nav aria-label="Fil d'Ariane" class="mb-3">
+          <ol class="flex items-center gap-2 text-sm text-gray-400">
+            <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+            <li aria-hidden="true" class="text-gray-600">/</li>
+            <li><a href="/services" class="hover:text-white transition-colors">Services</a></li>
+            <li aria-hidden="true" class="text-gray-600">/</li>
+            <li class="text-white font-medium" aria-current="page">Levage</li>
+          </ol>
+        </nav>
+        <h1 class="font-heading font-black text-3xl sm:text-5xl text-white leading-tight">Levage et manutention</h1>
+      </Container>
+    </section>
+
+    <section class="py-16 bg-gray-900">
+      <Container>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+          <div class="lg:col-span-8 flex flex-col gap-12">
+            <Animate animation="slideUp" client:visible>
+              <div>
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-5">Notre expertise</h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                  <p>La SARL Puechoultres & Fils dispose d'un parc d'engins de levage complet pour répondre à toutes les opérations de manutention et de travaux en hauteur, des plus simples aux plus complexes.</p>
+                  <p>De la nacelle électrique pour les travaux intérieurs à la <strong class="text-white">grue automotrice de 30 tonnes</strong> pour les levages lourds, nos équipements et conducteurs qualifiés garantissent sécurité et efficacité sur chaque chantier.</p>
+                  <p>Tous nos engins de levage sont conduits par des opérateurs certifiés CACES et formés aux règles de sécurité en vigueur. Nous intervenons sur tout l'Aveyron et les départements limitrophes.</p>
+                </div>
+              </div>
+            </Animate>
+
+            <Animate animation="slideUp" delay={0.1} client:visible>
+              <div>
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-6">Notre matériel</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                  {materiels.map(cat => (
+                    <div class="p-5 rounded-card border border-white/10 bg-white/5">
+                      <h3 class="font-heading font-semibold text-white mb-3">{cat.title}</h3>
+                      <ul class="flex flex-col gap-2">
+                        {cat.items.map(item => (
+                          <li class="flex items-start gap-2 text-gray-400 text-sm">
+                            <svg class="w-4 h-4 text-primary shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                            {item}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </Animate>
+
+            <Animate animation="slideUp" delay={0.15} client:visible>
+              <div>
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-6">Nos prestations</h2>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {prestations.map(item => (
+                    <li class="flex items-start gap-3 text-gray-300">
+                      <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Animate>
+
+            <Animate animation="slideUp" delay={0.2} client:visible>
+              <div class="p-6 rounded-card border border-white/10 bg-white/5">
+                <h3 class="font-heading font-semibold text-lg text-white mb-2">Sécurité et certifications</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Tous nos opérateurs sont titulaires des CACES correspondants à leurs engins. Les appareils de levage font l'objet de contrôles périodiques réglementaires. Plans de levage fournis pour les opérations complexes.</p>
+              </div>
+            </Animate>
+          </div>
+
+          <aside class="lg:col-span-4">
+            <div class="lg:sticky lg:top-24 flex flex-col gap-6">
+              <GlassCard hover={false}>
+                <h3 class="font-heading font-bold text-lg text-white mb-5">Besoin d'un devis ?</h3>
+                <form name="devis-levage" method="POST" data-netlify="true" class="flex flex-col gap-4">
+                  <input type="hidden" name="form-name" value="devis-levage" />
+                  <input type="hidden" name="service" value="Levage" />
+                  <div>
+                    <label for="nom" class="block text-xs font-medium text-gray-400 mb-1.5">Nom *</label>
+                    <input id="nom" name="nom" type="text" required placeholder="Votre nom" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="email" class="block text-xs font-medium text-gray-400 mb-1.5">Email *</label>
+                    <input id="email" name="email" type="email" required placeholder="votre@email.fr" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="telephone" class="block text-xs font-medium text-gray-400 mb-1.5">Téléphone</label>
+                    <input id="telephone" name="telephone" type="tel" placeholder="06 00 00 00 00" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="message" class="block text-xs font-medium text-gray-400 mb-1.5">Message *</label>
+                    <textarea id="message" name="message" required rows="4" placeholder="Type de levage, charge, hauteur, dates…" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none"></textarea>
+                  </div>
+                  <Button variant="primary" class="w-full justify-center">Envoyer ma demande</Button>
+                </form>
+              </GlassCard>
+              <GlassCard hover={false}>
+                <h3 class="font-heading font-semibold text-base text-white mb-4">Autres services</h3>
+                <ul class="flex flex-col gap-1">
+                  {autresServices.map(s => (
+                    <li>
+                      <a href={s.href} class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-[150ms]">
+                        <svg class="w-3.5 h-3.5 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                        {s.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-4 pt-4 border-t border-white/10">
+                  <a href="/services" class="text-sm text-primary hover:text-primary-light font-medium transition-colors">Voir tous les services →</a>
+                </div>
+              </GlassCard>
+            </div>
+          </aside>
+
+        </div>
+      </Container>
+    </section>
+
+    <Gallery images={gallery} title="Nos chantiers de levage" />
+
+    <section class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #1F1F1F 0%, #3B0A0A 50%, #1F1F1F 100%);">
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" aria-hidden="true" />
+      <Container class="relative z-10 text-center">
+        <Animate animation="slideUp" client:visible>
+          <h2 class="font-heading font-black text-2xl sm:text-4xl text-white mb-4">Un projet de levage ?</h2>
+          <p class="text-gray-300 text-lg max-w-xl mx-auto mb-8">Devis gratuit, disponibilité sous 24h, opérateurs certifiés.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href="/nous-contacter" variant="primary" size="lg">Contactez-nous</Button>
+            <Button href="tel:0565690270" variant="outline" size="lg">05 65 69 02 70</Button>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

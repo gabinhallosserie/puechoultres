@@ -1,0 +1,274 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import Container from '../components/ui/Container.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
+import Button from '../components/ui/Button.astro';
+import Animate from '../components/react/ScrollAnimations';
+
+const page = {
+  title: 'Présentation',
+  description: 'Fondée en 1976, la SARL Puechoultres & Fils est une entreprise familiale aveyronnaise spécialisée dans les travaux publics, le BTP et le génie civil à Baraqueville (Aveyron).',
+};
+
+const timeline = [
+  {
+    year: '1976',
+    title: 'Fondation',
+    desc: 'Création de la SARL Puechoultres & Fils à Baraqueville, en Aveyron. Une aventure familiale qui commence.',
+  },
+  {
+    year: '1990',
+    title: 'Développement transport',
+    desc: 'Renforcement du parc de camions et extension des activités de transport et terrassement sur tout l\'Aveyron.',
+  },
+  {
+    year: '2000',
+    title: 'Démolition & certifications',
+    desc: 'Obtention de la certification QUALIBAT 1112 pour la démolition et investissement dans une pelle de 65 tonnes.',
+  },
+  {
+    year: '2008',
+    title: 'Désamiantage',
+    desc: 'Certification QUALIBAT 1512 & 1552 pour les travaux de désamiantage et déplombage. Extension de l\'offre environnementale.',
+  },
+  {
+    year: '2015',
+    title: 'Site de recyclage',
+    desc: 'Ouverture du site de concassage et recyclage de matériaux à Baraqueville, pour valoriser les déchets inertes de chantier.',
+  },
+  {
+    year: 'Aujourd\'hui',
+    title: '47 collaborateurs',
+    desc: '12 métiers, un parc matériel de plus de 100 engins, et des partenariats avec Bouygues, Eiffage, SNCF et les collectivités locales.',
+  },
+];
+
+const valeurs = [
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>',
+    title: 'Expertise',
+    desc: 'Depuis 1976, nous maîtrisons l\'ensemble des métiers du BTP : terrassement, VRD, démolition, désamiantage, transport et levage. Nos équipes qualifiées interviennent sur les chantiers les plus complexes.',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    title: 'Qualité',
+    desc: 'Certifiés QUALIBAT pour la démolition et le désamiantage, nous nous engageons sur la qualité de chaque réalisation. La satisfaction de nos clients et la sécurité de nos équipes guident chacune de nos interventions.',
+  },
+  {
+    icon: '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>',
+    title: 'Proximité',
+    desc: 'Entreprise familiale aveyronnaise, nous sommes au plus près de nos clients : collectivités, artisans, particuliers et grandes entreprises. Un interlocuteur unique, une réponse rapide, un devis sous 48h.',
+  },
+];
+
+const stats = [
+  { value: '1976', label: 'Année de fondation' },
+  { value: '47', label: 'Collaborateurs' },
+  { value: '12', label: 'Métiers' },
+  { value: '100+', label: 'Engins au parc' },
+];
+
+const equipe = [
+  { role: 'Direction', count: 1, detail: 'Directeur général' },
+  { role: 'Travaux', count: 4, detail: '2 conducteurs de travaux, 2 chefs de chantier' },
+  { role: 'QSE & Sécurité', count: 2, detail: '1 ingénieur QSE, 1 responsable sécurité' },
+  { role: 'Matériel', count: 3, detail: '1 responsable matériel, 2 mécaniciens' },
+  { role: 'Chauffeurs', count: 20, detail: 'Permis C, CE, FIMO' },
+  { role: 'Conducteurs d\'engins', count: 8, detail: 'CACES toutes catégories' },
+  { role: 'Ouvriers qualifiés', count: 5, detail: 'TP, VRD, démolition' },
+  { role: 'Administration', count: 4, detail: '3 administratifs, 1 bureau d\'études' },
+];
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <!-- Hero -->
+    <section class="relative pt-32 pb-20 overflow-hidden bg-gray-950">
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-primary/10" aria-hidden="true" />
+      <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-primary/5 rounded-full blur-3xl pointer-events-none" aria-hidden="true" />
+      <Container class="relative z-10">
+        <Animate animation="slideUp" client:visible>
+          <nav aria-label="Fil d'Ariane" class="mb-8">
+            <ol class="flex items-center gap-2 text-sm text-gray-500">
+              <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+              <li aria-hidden="true" class="text-gray-700">/</li>
+              <li class="text-gray-300" aria-current="page">Présentation</li>
+            </ol>
+          </nav>
+          <div class="max-w-3xl">
+            <p class="text-primary font-medium text-sm uppercase tracking-widest mb-4">Depuis 1976</p>
+            <h1 class="font-heading font-black text-4xl sm:text-6xl text-white leading-tight mb-6">
+              Qui sommes-<br class="hidden sm:block" />nous&nbsp;?
+            </h1>
+            <p class="text-gray-300 text-xl leading-relaxed max-w-2xl">
+              La SARL Puechoultres & Fils est une entreprise familiale aveyronnaise implantée à Baraqueville depuis près de 50 ans. 47 collaborateurs, 12 métiers, une seule ambition : réaliser vos projets avec expertise et rigueur.
+            </p>
+          </div>
+        </Animate>
+
+        <!-- Stats rapides -->
+        <Animate animation="slideUp" delay={0.15} client:visible>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mt-14">
+            {stats.map(s => (
+              <div class="p-5 rounded-card border border-white/10 bg-white/5 text-center">
+                <p class="font-heading font-black text-3xl sm:text-4xl text-primary mb-1">{s.value}</p>
+                <p class="text-gray-400 text-sm">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+    <!-- Histoire & Timeline -->
+    <section class="py-20 bg-gray-900">
+      <Container>
+        <Animate animation="slideUp" client:visible>
+          <div class="text-center mb-14">
+            <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-4">Notre histoire</h2>
+            <p class="text-gray-400 text-lg max-w-xl mx-auto">Près de 50 ans d'engagement au service des chantiers aveyronnais.</p>
+          </div>
+        </Animate>
+
+        <div class="relative max-w-3xl mx-auto">
+          <!-- Ligne verticale -->
+          <div class="absolute left-6 sm:left-1/2 top-0 bottom-0 w-px bg-gradient-to-b from-primary via-primary/40 to-transparent -translate-x-1/2" aria-hidden="true" />
+
+          <div class="flex flex-col gap-0">
+            {timeline.map((item, i) => (
+              <Animate animation="slideUp" delay={i * 0.08} client:visible>
+                <div class:list={['relative flex gap-6 sm:gap-0 pb-10', i % 2 === 0 ? 'sm:flex-row' : 'sm:flex-row-reverse']}>
+                  <!-- Contenu -->
+                  <div class:list={['sm:w-[calc(50%-2rem)] pl-12 sm:pl-0', i % 2 === 0 ? 'sm:pr-10 sm:text-right' : 'sm:pl-10']}>
+                    <div class="inline-block px-3 py-1 rounded-full bg-primary/10 border border-primary/20 text-primary text-xs font-bold mb-2">{item.year}</div>
+                    <h3 class="font-heading font-bold text-lg text-white mb-1">{item.title}</h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">{item.desc}</p>
+                  </div>
+
+                  <!-- Point central -->
+                  <div class="absolute left-6 sm:left-1/2 -translate-x-1/2 flex items-center justify-center">
+                    <div class="w-4 h-4 rounded-full bg-primary border-4 border-gray-900 shrink-0" />
+                  </div>
+
+                  <!-- Espace côté opposé -->
+                  <div class="hidden sm:block sm:w-[calc(50%-2rem)]" />
+                </div>
+              </Animate>
+            ))}
+          </div>
+        </div>
+      </Container>
+    </section>
+
+    <!-- Valeurs -->
+    <section class="py-20 bg-gray-950">
+      <Container>
+        <Animate animation="slideUp" client:visible>
+          <div class="text-center mb-14">
+            <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-4">Nos valeurs</h2>
+            <p class="text-gray-400 text-lg max-w-xl mx-auto">Les principes qui guident chacune de nos interventions depuis 1976.</p>
+          </div>
+        </Animate>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {valeurs.map((v, i) => (
+            <Animate animation="slideUp" delay={i * 0.1} className="h-full" client:visible>
+              <GlassCard class="flex flex-col gap-5 h-full">
+                <div class="w-12 h-12 rounded-xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+                  <div class="w-6 h-6" set:html={v.icon} />
+                </div>
+                <div class="flex-1">
+                  <h3 class="font-heading font-bold text-xl text-white mb-3">{v.title}</h3>
+                  <p class="text-gray-400 leading-relaxed">{v.desc}</p>
+                </div>
+              </GlassCard>
+            </Animate>
+          ))}
+        </div>
+      </Container>
+    </section>
+
+    <!-- Équipe -->
+    <section class="py-20 bg-gray-900">
+      <Container>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-start">
+
+          <Animate animation="slideLeft" client:visible>
+            <div>
+              <h2 class="font-heading font-black text-3xl sm:text-4xl text-white mb-6">Une équipe de 47 professionnels</h2>
+              <div class="space-y-4 text-gray-300 leading-relaxed">
+                <p>La SARL Puechoultres & Fils est une entreprise familiale à taille humaine avec un excellent esprit d'équipe. Chaque collaborateur est un expert dans son domaine, formé aux dernières réglementations et certifications.</p>
+                <p>Nous collaborons avec de grandes entreprises comme <strong class="text-white">Bouygues, Colas, Eiffage, Eurovia, EDF, SNCF</strong>, ainsi qu'avec les collectivités locales et les artisans PME de l'Aveyron.</p>
+                <p>La satisfaction de nos clients, la sécurité de nos équipes et la préservation de l'environnement sont au cœur de notre démarche de progrès.</p>
+              </div>
+            </div>
+          </Animate>
+
+          <Animate animation="slideRight" client:visible>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {equipe.map(m => (
+                <div class="flex items-start gap-3 p-4 rounded-card border border-white/10 bg-white/5">
+                  <div class="w-8 h-8 rounded-lg bg-primary/10 border border-primary/20 flex items-center justify-center shrink-0">
+                    <span class="font-heading font-bold text-primary text-sm">{m.count}</span>
+                  </div>
+                  <div>
+                    <p class="font-medium text-white text-sm">{m.role}</p>
+                    <p class="text-gray-500 text-xs mt-0.5">{m.detail}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </Animate>
+
+        </div>
+      </Container>
+    </section>
+
+    <!-- Zone d'intervention -->
+    <section class="py-16 bg-gray-950 border-t border-white/5">
+      <Container>
+        <Animate animation="slideUp" client:visible>
+          <div class="flex flex-col sm:flex-row items-center gap-8 p-8 rounded-card border border-white/10 bg-white/5">
+            <div class="w-16 h-16 rounded-2xl bg-primary/10 border border-primary/20 flex items-center justify-center text-primary shrink-0">
+              <svg class="w-8 h-8" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                <circle cx="12" cy="10" r="3"/>
+              </svg>
+            </div>
+            <div class="text-center sm:text-left">
+              <h3 class="font-heading font-bold text-xl text-white mb-2">Zone d'intervention</h3>
+              <p class="text-gray-400 leading-relaxed">Siège à <strong class="text-white">Baraqueville (ZA Marengo — 12160)</strong>. Nous intervenons sur tout le département de l'<strong class="text-white">Aveyron (12)</strong> et les départements limitrophes : Hérault, Lozère, Tarn, Lot, Cantal.</p>
+            </div>
+            <div class="shrink-0">
+              <a href="https://maps.google.com/maps?q=ZA+Marengo,+BARAQUEVILLE,+12160" target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-2 px-4 py-2 rounded-btn border border-white/20 text-sm text-gray-300 hover:text-white hover:border-white/40 transition-colors">
+                <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                Voir sur la carte
+              </a>
+            </div>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+    <!-- CTA -->
+    <section class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #1F1F1F 0%, #3B0A0A 50%, #1F1F1F 100%);">
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" aria-hidden="true" />
+      <Container class="relative z-10 text-center">
+        <Animate animation="slideUp" client:visible>
+          <h2 class="font-heading font-black text-2xl sm:text-4xl text-white mb-4">Travaillons ensemble</h2>
+          <p class="text-gray-300 text-lg max-w-xl mx-auto mb-8">Devis gratuit sous 48h. Nos équipes se déplacent sur tout l'Aveyron.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href="/nous-contacter" variant="primary" size="lg">Contactez-nous</Button>
+            <Button href="tel:0565690270" variant="outline" size="lg">05 65 69 02 70</Button>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

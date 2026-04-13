@@ -1,0 +1,276 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Header from '../components/layout/Header.astro';
+import Footer from '../components/layout/Footer.astro';
+import HeroSlider from '../components/react/HeroSlider';
+import Animate from '../components/react/ScrollAnimations';
+import Container from '../components/ui/Container.astro';
+import GlassCard from '../components/ui/GlassCard.astro';
+import Button from '../components/ui/Button.astro';
+
+// ---- Hero slides ----
+const slides = [
+  {
+    image: '/images/hero-travaux-publics.jpg',
+    title: 'Experts en travaux publics depuis 1976',
+    subtitle: 'Implantés en Aveyron, nous intervenons sur tout le département et les régions limitrophes.',
+    cta1: { text: 'Nos services',     href: '/services' },
+    cta2: { text: 'Nous contacter',   href: '/nous-contacter' },
+  },
+  {
+    image: '/images/hero-btp.jpg',
+    title: 'Des solutions BTP sur mesure',
+    subtitle: 'Du génie civil à la démolition, nos équipes prennent en charge vos projets les plus complexes.',
+    cta1: { text: 'Nos services',     href: '/services' },
+    cta2: { text: 'Nous contacter',   href: '/nous-contacter' },
+  },
+  {
+    image: '/images/hero-engins.jpg',
+    title: 'Matériel de pointe, équipe qualifiée',
+    subtitle: 'Un parc matériel complet et une équipe de 47 professionnels au service de vos chantiers.',
+    cta1: { text: 'Nos services',     href: '/services' },
+    cta2: { text: 'Nous contacter',   href: '/nous-contacter' },
+  },
+];
+
+// ---- Services (SVG Lucide inline pour rendu Astro statique) ----
+const services = [
+  {
+    // Shovel (travaux)
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 22v-5l5-5 5 5-5 5z"/><path d="M9.5 14.5 16 8"/><path d="m17 2 5 5-.5.5a3.53 3.53 0 0 1-5 0s0 0 0 0a3.53 3.53 0 0 1 0-5L17 2"/></svg>`,
+    title: 'Travaux publics',
+    description: 'Terrassement, génie civil, routes et réseaux. Nous intervenons sur tous les chantiers de construction et d\'aménagement.',
+    href: '/services/travaux-publics',
+  },
+  {
+    // Truck
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>`,
+    title: 'Transport',
+    description: 'Flotte de camions bennes et porteurs pour le transport de matériaux, terres et granulats en Aveyron.',
+    href: '/services/transport',
+  },
+  {
+    // Container (béton)
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M17 18h1"/><path d="M12 18h1"/><path d="M7 18h1"/></svg>`,
+    title: 'Béton prêt à l\'emploi',
+    description: 'Centrale à béton de 50 m³/h. Malaxeurs et pompe flèche 24 m pour tous vos coulages sur site.',
+    href: '/services/beton-pret-emploi',
+  },
+  {
+    // ShieldAlert (désamiantage)
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/><path d="M12 8v4"/><path d="M12 16h.01"/></svg>`,
+    title: 'Désamiantage',
+    description: 'Intervention certifiée en désamiantage avec équipements homologués et protocoles de sécurité stricts.',
+    href: '/services/desamiantage',
+  },
+  {
+    // Flame (goudronnage)
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 0 0 2.5 2.5z"/></svg>`,
+    title: 'Goudronnage',
+    description: 'Enrobés, répandeuse et gravillonneur. Revêtements routiers et parkings pour collectivités et privés.',
+    href: '/services/goudronnage',
+  },
+  {
+    // Hammer (démolition)
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m15 12-8.373 8.373a1 1 0 1 1-3-3L12 9"/><path d="m18 15 4-4"/><path d="m21.5 11.5-1.914-1.914A2 2 0 0 1 19 8.172V7l-2.26-2.26a6 6 0 0 0-4.202-1.756L9 2.96l.92.82A6.18 6.18 0 0 1 12 8.4V10l2 2h1.172a2 2 0 0 1 1.414.586L18.5 14.5"/></svg>`,
+    title: 'Démolition',
+    description: 'Pelle de démolition 65 tonnes, broyeur à béton et pince à tri pour démolitions industrielles ou bâtiment.',
+    href: '/services/demolition',
+  },
+];
+
+// ---- Chiffres clés ----
+const stats = [
+  { value: '50+',  label: 'Ans d\'expérience' },
+  { value: '47',   label: 'Collaborateurs' },
+  { value: '12',   label: 'Services BTP' },
+  { value: '100%', label: 'Clients satisfaits' },
+];
+---
+
+<BaseLayout
+  title="Accueil"
+  description="Puechoultres & Fils, experts en travaux publics, transport, BTP et démolition depuis 1976 en Aveyron. Devis gratuit."
+>
+  <Header />
+
+  <main>
+
+    <!-- ================================ -->
+    <!--  HERO SLIDER                     -->
+    <!-- ================================ -->
+    <HeroSlider slides={slides} client:load />
+
+
+    <!-- ================================ -->
+    <!--  NOS EXPERTISES                  -->
+    <!-- ================================ -->
+    <section class="py-20 bg-gray-900" aria-labelledby="services-heading">
+      <Container>
+
+        <!-- En-tête section -->
+        <Animate animation="slideUp" client:visible>
+        <div class="text-center max-w-2xl mx-auto mb-14">
+          <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-3">
+            Ce que nous faisons
+          </p>
+          <h2
+            id="services-heading"
+            class="font-heading font-bold text-3xl sm:text-4xl text-white"
+          >
+            Nos expertises
+          </h2>
+          <p class="mt-4 text-gray-400 text-lg leading-relaxed">
+            De la conception à la réalisation, nous couvrons l'ensemble des métiers
+            du BTP pour répondre à vos projets, quelle qu'en soit la complexité.
+          </p>
+        </div>
+        </Animate>
+
+        <!-- Grille de cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map(({ icon, title, description, href }, i) => (
+            <Animate animation="slideUp" delay={i * 0.1} className="h-full" client:visible>
+            <GlassCard class="flex flex-col gap-5 h-full">
+
+              <!-- Icône -->
+              <div class="w-14 h-14 flex items-center justify-center rounded-card bg-primary/10 border border-primary/20 text-primary shrink-0"
+                   set:html={icon} />
+
+              <!-- Texte -->
+              <div class="flex-1 flex flex-col gap-3">
+                <h3 class="font-heading font-bold text-lg text-white">{title}</h3>
+                <p class="text-gray-400 text-sm leading-relaxed flex-1">{description}</p>
+              </div>
+
+              <!-- Lien -->
+              <a
+                href={href}
+                class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-light transition-colors duration-[150ms] group"
+              >
+                En savoir plus
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="w-4 h-4 transition-transform duration-[150ms] group-hover:translate-x-1"
+                  viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2"
+                  stroke-linecap="round" stroke-linejoin="round"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14M12 5l7 7-7 7"/>
+                </svg>
+              </a>
+
+            </GlassCard>
+            </Animate>
+          ))}
+        </div>
+
+        <!-- Lien "Voir tous les services" -->
+        <div class="mt-12 text-center">
+          <Button href="/services" variant="secondary">
+            Voir tous nos services
+          </Button>
+        </div>
+
+      </Container>
+    </section>
+
+
+    <!-- ================================ -->
+    <!--  CHIFFRES CLÉS                   -->
+    <!-- ================================ -->
+    <section
+      class="relative py-20 overflow-hidden bg-secondary"
+      aria-labelledby="stats-heading"
+    >
+      <!-- Overlay décoratif rouge subtil -->
+      <div
+        class="pointer-events-none absolute inset-0"
+        style="background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(220,38,38,0.12) 0%, transparent 70%);"
+        aria-hidden="true"
+      />
+
+      <Container class="relative z-10">
+
+        <Animate animation="fadeIn" client:visible>
+          <div class="text-center mb-14">
+            <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-3">
+              En chiffres
+            </p>
+            <h2
+              id="stats-heading"
+              class="font-heading font-bold text-3xl sm:text-4xl text-white"
+            >
+              Puechoultres en chiffres
+            </h2>
+          </div>
+        </Animate>
+
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+          {stats.map(({ value, label }, i) => (
+            <Animate animation="fadeIn" delay={i * 0.15} client:visible>
+              <div class="text-center">
+                <p
+                  class="font-heading font-black text-5xl sm:text-6xl text-primary leading-none"
+                  aria-label={`${value} ${label}`}
+                >
+                  {value}
+                </p>
+                <p class="mt-3 text-gray-300 font-medium text-sm sm:text-base uppercase tracking-wide">
+                  {label}
+                </p>
+              </div>
+            </Animate>
+          ))}
+        </div>
+
+      </Container>
+    </section>
+
+
+    <!-- ================================ -->
+    <!--  CTA FINAL                       -->
+    <!-- ================================ -->
+    <section
+      class="relative py-24 overflow-hidden"
+      style="background: linear-gradient(135deg, #1F1F1F 0%, #3B0A0A 50%, #1F1F1F 100%);"
+      aria-labelledby="cta-heading"
+    >
+      <!-- Bordure rouge en haut -->
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" aria-hidden="true" />
+
+      <Container class="relative z-10 text-center">
+
+        <Animate animation="slideUp" client:visible>
+        <p class="text-primary font-semibold text-sm uppercase tracking-widest mb-4">
+          Parlons de votre projet
+        </p>
+        <h2
+          id="cta-heading"
+          class="font-heading font-black text-2xl sm:text-4xl lg:text-5xl text-white max-w-2xl mx-auto leading-[1.15]"
+        >
+          Un projet&nbsp;? Contactez-nous
+        </h2>
+        <p class="mt-5 text-gray-300 text-lg max-w-xl mx-auto leading-relaxed">
+          Notre équipe étudie votre besoin et vous répond rapidement.
+          Devis gratuit et sans engagement.
+        </p>
+
+        <div class="mt-10 flex flex-wrap justify-center gap-4">
+          <Button href="/nous-contacter" variant="primary" size="lg">
+            Demander un devis
+          </Button>
+          <Button href="tel:0565690270" variant="outline" size="lg">
+            05 65 69 02 70
+          </Button>
+        </div>
+        </Animate>
+
+      </Container>
+    </section>
+
+  </main>
+
+  <Footer />
+</BaseLayout>

@@ -1,0 +1,20 @@
+{
+  "name": "refonte-workflow",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "extract": "node scripts/extract-site.js",
+    "generate-inventory": "node scripts/generate-inventory.js",
+    "generate-site": "node scripts/generate-site.js",
+    "dev": "cd 03-nouveau-site && npm run dev",
+    "build": "cd 03-nouveau-site && npm run build",
+    "deploy": "cd 03-nouveau-site && vercel --prod"
+  },
+  "dependencies": {
+    "playwright": "^1.40.0",
+    "cheerio": "^1.0.0-rc.12",
+    "turndown": "^7.1.2",
+    "axios": "^1.6.0",
+    "sharp": "^0.33.0"
+  }
+}

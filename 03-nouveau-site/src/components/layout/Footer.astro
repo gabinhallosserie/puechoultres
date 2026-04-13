@@ -1,0 +1,130 @@
+---
+import Container from '../ui/Container.astro';
+
+const year = new Date().getFullYear();
+
+const navLinks = [
+  { label: 'Services',          href: '/services' },
+  { label: 'Présentation',      href: '/presentation' },
+  { label: 'Contact',           href: '/nous-contacter' },
+  { label: 'Mentions légales',  href: '/mentions-legales' },
+];
+
+const socials = [
+  {
+    label: 'Facebook',
+    href: 'https://www.facebook.com/puechoultres',
+    // Lucide n'existe pas en Astro natif — SVG inline pour éviter l'hydration React
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+    </svg>`,
+  },
+  {
+    label: 'LinkedIn',
+    href: 'https://www.linkedin.com/company/puechoultres',
+    icon: `<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+      stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+      <rect x="2" y="9" width="4" height="12"/>
+      <circle cx="4" cy="4" r="2"/>
+    </svg>`,
+  },
+];
+---
+
+<footer class="bg-secondary border-t border-gray-700">
+  <Container class="pt-12 pb-4">
+
+    <!-- Grille 4 colonnes -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-10 border-b border-gray-700">
+
+      <!-- Col 1 — Logo & Tagline -->
+      <div class="lg:col-span-1">
+        <a
+          href="/"
+          class="font-heading font-bold text-xl text-white hover:text-primary transition-colors duration-[250ms]"
+        >
+          Puechoultres
+        </a>
+        <p class="mt-3 text-sm text-gray-400 leading-relaxed">
+          Experts en travaux publics<br />depuis 1976 en Aveyron.
+        </p>
+      </div>
+
+      <!-- Col 2 — Navigation -->
+      <div>
+        <h3 class="font-heading font-semibold text-sm text-white uppercase tracking-wider mb-4">
+          Navigation
+        </h3>
+        <ul class="flex flex-col gap-2">
+          {navLinks.map(link => (
+            <li>
+              <a
+                href={link.href}
+                class="text-sm text-gray-400 hover:text-primary transition-colors duration-[150ms]"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- Col 3 — Contact -->
+      <div>
+        <h3 class="font-heading font-semibold text-sm text-white uppercase tracking-wider mb-4">
+          Contact
+        </h3>
+        <ul class="flex flex-col gap-3 text-sm text-gray-400">
+          <li>
+            <a
+              href="tel:0565690270"
+              class="hover:text-primary transition-colors duration-[150ms]"
+              aria-label="Appeler le 05 65 69 02 70"
+            >
+              05 65 69 02 70
+            </a>
+          </li>
+          <li>
+            <a
+              href="mailto:contact@puechoultres.fr"
+              class="hover:text-primary transition-colors duration-[150ms]"
+            >
+              contact@puechoultres.fr
+            </a>
+          </li>
+          <li class="leading-relaxed">
+            Baraqueville<br />12160 Aveyron, France
+          </li>
+        </ul>
+      </div>
+
+      <!-- Col 4 — Réseaux sociaux -->
+      <div>
+        <h3 class="font-heading font-semibold text-sm text-white uppercase tracking-wider mb-4">
+          Suivez-nous
+        </h3>
+        <div class="flex gap-3">
+          {socials.map(social => (
+            <a
+              href={social.href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={social.label}
+              class="w-10 h-10 flex items-center justify-center rounded-lg text-gray-400 border border-gray-700 hover:text-primary hover:border-primary transition-colors duration-[250ms]"
+              set:html={social.icon}
+            />
+          ))}
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <p class="pt-4 text-center text-xs text-gray-500">
+      © {year} Puechoultres — SARL Puechoultres &amp; Fils. Tous droits réservés.
+    </p>
+
+  </Container>
+</footer>

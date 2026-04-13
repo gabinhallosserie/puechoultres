@@ -1,0 +1,344 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Container from '../../components/ui/Container.astro';
+import Button from '../../components/ui/Button.astro';
+import Animate from '../../components/react/ScrollAnimations';
+
+const page = {
+  title: 'Nos services',
+  description: 'Puechoultres & Fils propose 12 métiers du BTP en Aveyron : travaux publics, transport, béton, désamiantage, démolition, goudronnage, VRD, levage, location d\'engins et recyclage.',
+};
+
+type Service = {
+  titre:       string;
+  slug:        string;
+  image:       string;
+  resume:      string;
+  tags:        string[];
+  categorie:   'construction' | 'environnement' | 'logistique';
+  badge?:      string;
+};
+
+const services: Service[] = [
+  // ── Construction & aménagement ────────────────────────────────────────────
+  {
+    titre:     'Travaux publics',
+    slug:      'travaux-publics',
+    image:     '/images/hero-travaux-publics.jpg',
+    resume:    'Terrassements, génie civil, routes et aménagements. Notre cœur de métier depuis 1976.',
+    tags:      ['Terrassement', 'VRD', 'Génie civil'],
+    categorie: 'construction',
+  },
+  {
+    titre:     'Voirie et réseaux',
+    slug:      'voirie-reseaux',
+    image:     '/images/hero-voirie.jpg',
+    resume:    'Voies d\'accès, réseaux eau/électricité/télécom, enfouissement et tranchées.',
+    tags:      ['VRD', 'Réseaux', 'Canalisations'],
+    categorie: 'construction',
+  },
+  {
+    titre:     'Assainissement',
+    slug:      'assainissement',
+    image:     '/images/hero-assainissement.jpg',
+    resume:    'Raccordement réseau, fosse septique, SPANC. Collectif et non collectif.',
+    tags:      ['SPANC', 'Fosse septique', 'Eaux usées'],
+    categorie: 'construction',
+  },
+  {
+    titre:     'Béton prêt à l\'emploi',
+    slug:      'beton-pret-emploi',
+    image:     '/images/hero-beton.jpg',
+    resume:    'Centrale à béton 50 m³/h à Baraqueville. Livraison malaxeur et pompe flèche 24 m.',
+    tags:      ['Centrale béton', 'Pompe à béton', 'Livraison'],
+    categorie: 'construction',
+  },
+  {
+    titre:     'Goudronnage et enrobés',
+    slug:      'goudronnage',
+    image:     '/images/hero-goudronnage.jpg',
+    resume:    'Bi-couche, tri-couche, enrobés à chaud. Chemins, cours et parkings.',
+    tags:      ['Enrobés', 'Bi-couche', 'Béton désactivé'],
+    categorie: 'construction',
+  },
+  {
+    titre:     'Aménagement extérieur',
+    slug:      'amenagement-exterieur',
+    image:     '/images/hero-amenagement.jpg',
+    resume:    'Terrassement, clôtures, béton balayé/désactivé/coloré, bordures, dallage.',
+    tags:      ['Allées', 'Béton décoratif', 'Clôtures'],
+    categorie: 'construction',
+  },
+  // ── Démolition & environnement ────────────────────────────────────────────
+  {
+    titre:     'Démolition',
+    slug:      'demolition',
+    image:     '/images/hero-demolition.jpg',
+    resume:    'Déconstruction avec tri sélectif. Pelle 65 t. Certification QUALIBAT 1112.',
+    tags:      ['QUALIBAT 1112', 'Déconstruction', 'Tri sélectif'],
+    categorie: 'environnement',
+    badge:     'QUALIBAT 1112',
+  },
+  {
+    titre:     'Désamiantage',
+    slug:      'desamiantage',
+    image:     '/images/hero-desamiantage.jpg',
+    resume:    'Retrait amiante et plomb en toute sécurité. Certifications QUALIBAT 1512 & 1552.',
+    tags:      ['QUALIBAT 1552', 'Amiante', 'Décontamination'],
+    categorie: 'environnement',
+    badge:     'QUALIBAT 1552',
+  },
+  {
+    titre:     'Recyclage et valorisation',
+    slug:      'recyclage',
+    image:     '/images/hero-recyclage.jpg',
+    resume:    'Site de concassage à Baraqueville. Revalorisation gravats, bétons, enrobés.',
+    tags:      ['Concassage', 'Granulats recyclés', 'Dépôt inerte'],
+    categorie: 'environnement',
+  },
+  // ── Transport, levage & location ──────────────────────────────────────────
+  {
+    titre:     'Transport',
+    slug:      'transport',
+    image:     '/images/hero-transport.jpg',
+    resume:    'Camions bennes 6×4/8×4, porte-chars jusqu\'à 72 t, transport exceptionnel.',
+    tags:      ['Transport exceptionnel', 'Porte-chars', 'Camions bennes'],
+    categorie: 'logistique',
+  },
+  {
+    titre:     'Levage et manutention',
+    slug:      'levage',
+    image:     '/images/hero-levage.jpg',
+    resume:    'Nacelles, télescopiques jusqu\'à 21 m, grue automotrice 30 t. Opérateurs CACES.',
+    tags:      ['Nacelle', 'Grue 30 t', 'CACES'],
+    categorie: 'logistique',
+  },
+  {
+    titre:     'Location d\'engins',
+    slug:      'location',
+    image:     '/images/hero-location.jpg',
+    resume:    'Pelles, chargeurs, camions, nacelles. Avec ou sans chauffeur qualifié.',
+    tags:      ['Pelles', 'Nacelles', 'Avec chauffeur'],
+    categorie: 'logistique',
+  },
+];
+
+const categories = [
+  {
+    id:    'construction',
+    label: 'Construction & aménagement',
+    count: services.filter(s => s.categorie === 'construction').length,
+    color: 'bg-blue-500/10 border-blue-500/20 text-blue-400',
+    icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 20a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8l-7 5V8l-7 5V4a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/></svg>',
+  },
+  {
+    id:    'environnement',
+    label: 'Démolition & environnement',
+    count: services.filter(s => s.categorie === 'environnement').length,
+    color: 'bg-green-500/10 border-green-500/20 text-green-400',
+    icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+  },
+  {
+    id:    'logistique',
+    label: 'Transport, levage & location',
+    count: services.filter(s => s.categorie === 'logistique').length,
+    color: 'bg-orange-500/10 border-orange-500/20 text-orange-400',
+    icon:  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2"/><path d="M15 18H9"/><path d="M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.624l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></svg>',
+  },
+];
+
+const catColorMap: Record<string, string> = {
+  construction: 'bg-blue-500/10 text-blue-400 border-blue-500/20',
+  environnement:'bg-green-500/10 text-green-400 border-green-500/20',
+  logistique:   'bg-orange-500/10 text-orange-400 border-orange-500/20',
+};
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <!-- ── Hero ──────────────────────────────────────────────────────────── -->
+    <section class="relative pt-32 pb-20 overflow-hidden bg-gray-950">
+      <div class="absolute inset-0 bg-gradient-to-br from-gray-950 via-gray-900 to-primary/10" aria-hidden="true" />
+      <!-- Grille déco -->
+      <div
+        class="absolute inset-0 pointer-events-none opacity-[0.03]"
+        style="background-image: linear-gradient(#fff 1px, transparent 1px), linear-gradient(90deg, #fff 1px, transparent 1px); background-size: 60px 60px;"
+        aria-hidden="true"
+      />
+      <Container class="relative z-10">
+        <Animate animation="slideUp" client:visible>
+          <nav aria-label="Fil d'Ariane" class="mb-8">
+            <ol class="flex items-center gap-2 text-sm text-gray-500">
+              <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+              <li aria-hidden="true" class="text-gray-700">/</li>
+              <li class="text-gray-300" aria-current="page">Nos services</li>
+            </ol>
+          </nav>
+          <div class="max-w-3xl">
+            <p class="text-primary font-medium text-sm uppercase tracking-widest mb-4">Expertise BTP depuis 1976</p>
+            <h1 class="font-heading font-black text-4xl sm:text-6xl text-white leading-tight mb-5">
+              Nos services
+            </h1>
+            <p class="text-gray-300 text-xl leading-relaxed">
+              12 métiers au service de vos projets. De la tranchée à la grue, du béton au désamiantage — une seule entreprise pour tout gérer, en Aveyron et alentours.
+            </p>
+          </div>
+        </Animate>
+
+        <!-- Catégories rapides -->
+        <Animate animation="slideUp" delay={0.15} client:visible>
+          <div class="flex flex-wrap gap-3 mt-10">
+            {categories.map(cat => (
+              <a
+                href={`#${cat.id}`}
+                class:list={['inline-flex items-center gap-2 px-4 py-2 rounded-full border text-sm font-medium transition-all duration-200 hover:-translate-y-0.5', cat.color]}
+              >
+                <span class="w-4 h-4" set:html={cat.icon} />
+                {cat.label}
+                <span class="ml-1 opacity-60">({cat.count})</span>
+              </a>
+            ))}
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+    <!-- ── Services par catégorie ─────────────────────────────────────────── -->
+    {categories.map((cat, ci) => {
+      const catServices = services.filter(s => s.categorie === cat.id);
+      const bgAlt = ci % 2 === 1;
+      return (
+        <section
+          id={cat.id}
+          class:list={['py-20 scroll-mt-20', bgAlt ? 'bg-gray-950' : 'bg-gray-900']}
+        >
+          <Container>
+            <!-- En-tête catégorie -->
+            <Animate animation="slideUp" client:visible>
+              <div class="flex items-center gap-4 mb-12">
+                <div class:list={['w-10 h-10 rounded-xl flex items-center justify-center border shrink-0', cat.color]}>
+                  <span class="w-5 h-5" set:html={cat.icon} />
+                </div>
+                <div>
+                  <h2 class="font-heading font-black text-2xl sm:text-3xl text-white">{cat.label}</h2>
+                  <p class="text-gray-500 text-sm mt-0.5">{cat.count} service{cat.count > 1 ? 's' : ''}</p>
+                </div>
+                <div class="hidden sm:block flex-1 h-px bg-gradient-to-r from-white/10 to-transparent ml-4" aria-hidden="true" />
+              </div>
+            </Animate>
+
+            <!-- Grille de cards -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {catServices.map((service, i) => (
+                <Animate animation="slideUp" delay={i * 0.08} className="h-full" client:visible>
+                  <article class="group flex flex-col h-full overflow-hidden rounded-card border border-white/10 bg-white/5 hover:border-primary/40 hover:bg-white/[0.08] transition-all duration-300 hover:-translate-y-2">
+
+                    <!-- Image -->
+                    <div class="relative aspect-[16/9] overflow-hidden">
+                      <img
+                        src={service.image}
+                        alt={`${service.titre} — Puechoultres & Fils`}
+                        class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                        width="640"
+                        height="360"
+                      />
+                      <!-- Overlay dégradé bas -->
+                      <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" aria-hidden="true" />
+
+                      <!-- Badge catégorie -->
+                      <div class="absolute top-3 left-3">
+                        <span class:list={['inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold border backdrop-blur-sm', catColorMap[service.categorie]]}>
+                          {service.categorie === 'construction' ? 'Construction' : service.categorie === 'environnement' ? 'Environnement' : 'Logistique'}
+                        </span>
+                      </div>
+
+                      <!-- Badge certification si dispo -->
+                      {service.badge && (
+                        <div class="absolute top-3 right-3">
+                          <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-bold bg-primary/80 text-white border border-primary backdrop-blur-sm">
+                            {service.badge}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+
+                    <!-- Contenu -->
+                    <div class="flex flex-col gap-3 p-5 flex-1">
+                      <h3 class="font-heading font-bold text-lg text-white leading-snug group-hover:text-primary transition-colors duration-200">
+                        {service.titre}
+                      </h3>
+                      <p class="text-gray-400 text-sm leading-relaxed flex-1">{service.resume}</p>
+
+                      <!-- Tags -->
+                      <div class="flex flex-wrap gap-1.5">
+                        {service.tags.map(tag => (
+                          <span class="px-2 py-0.5 rounded-md bg-white/5 border border-white/10 text-gray-500 text-xs">{tag}</span>
+                        ))}
+                      </div>
+
+                      <!-- CTA -->
+                      <a
+                        href={`/services/${service.slug}`}
+                        class="inline-flex items-center gap-1.5 text-sm font-semibold text-primary hover:text-primary-light transition-colors duration-150 mt-1 self-start"
+                        aria-label={`En savoir plus sur ${service.titre}`}
+                      >
+                        En savoir plus
+                        <svg class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                      </a>
+                    </div>
+
+                  </article>
+                </Animate>
+              ))}
+            </div>
+          </Container>
+        </section>
+      );
+    })}
+
+    <!-- ── Bandeau chiffres clés ─────────────────────────────────────────── -->
+    <section class="py-16 bg-gray-900 border-t border-white/5">
+      <Container>
+        <Animate animation="slideUp" client:visible>
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
+            {[
+              { value: '12',   label: 'Métiers maîtrisés' },
+              { value: '47',   label: 'Collaborateurs' },
+              { value: '100+', label: 'Engins au parc' },
+              { value: '48h',  label: 'Délai de réponse' },
+            ].map(s => (
+              <div class="p-6 rounded-card border border-white/10 bg-white/5">
+                <p class="font-heading font-black text-4xl text-primary mb-2">{s.value}</p>
+                <p class="text-gray-400 text-sm">{s.label}</p>
+              </div>
+            ))}
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+    <!-- ── Devis rapide ───────────────────────────────────────────────────── -->
+    <section class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #1F1F1F 0%, #3B0A0A 50%, #1F1F1F 100%);">
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" aria-hidden="true" />
+      <Container class="relative z-10 text-center">
+        <Animate animation="slideUp" client:visible>
+          <h2 class="font-heading font-black text-2xl sm:text-4xl text-white mb-4">Votre projet, notre expertise</h2>
+          <p class="text-gray-300 text-lg max-w-xl mx-auto mb-8">
+            Devis gratuit sous 48h. Nos équipes se déplacent sur tout l'Aveyron et les départements limitrophes.
+          </p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href="/nous-contacter" variant="primary" size="lg">Demander un devis</Button>
+            <Button href="tel:0565690270" variant="outline" size="lg">05 65 69 02 70</Button>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>

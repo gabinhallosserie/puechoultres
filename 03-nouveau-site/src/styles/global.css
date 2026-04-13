@@ -1,0 +1,349 @@
+/* ===== GOOGLE FONTS ===== */
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,600;0,700;0,800;0,900;1,700&family=Inter:wght@400;500;600&display=swap');
+
+/* ===== TAILWIND CSS v4 ===== */
+@import "tailwindcss";
+
+@plugin "@tailwindcss/typography";
+@plugin "@tailwindcss/forms";
+
+/* ===== DESIGN TOKENS ===== */
+@theme {
+  /* Primary - Rouge Impact */
+  --color-primary: #DC2626;
+  --color-primary-light: #EF4444;
+  --color-primary-dark: #991B1B;
+
+  /* Secondary - Noir Puissance */
+  --color-secondary: #1F1F1F;
+  --color-secondary-light: #2D2D2D;
+
+  /* Accent - Orange Énergie */
+  --color-accent: #F97316;
+  --color-accent-light: #FB923C;
+
+  /* Semantic */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #DC2626;
+  --color-info: #3B82F6;
+
+  /* Typographie */
+  --font-heading: 'Montserrat', sans-serif;
+  --font-sans: 'Inter', sans-serif;
+
+  /* Border radius */
+  --radius-btn: 8px;
+  --radius-card: 12px;
+
+  /* Box shadows */
+  --shadow-glass: 0 4px 24px rgba(0, 0, 0, 0.15), 0 1px 2px rgba(0, 0, 0, 0.1);
+  --shadow-glass-hover: 0 16px 48px rgba(220, 38, 38, 0.18), 0 4px 16px rgba(0, 0, 0, 0.2);
+  --shadow-btn: 0 4px 14px rgba(220, 38, 38, 0.35);
+  --shadow-btn-hover: 0 8px 24px rgba(220, 38, 38, 0.45);
+  --shadow-nav: 0 4px 32px rgba(0, 0, 0, 0.4), 0 1px 0 rgba(255, 255, 255, 0.04);
+
+  /* Backdrop blur */
+  --backdrop-blur-glass: 14px;
+
+  /* Breakpoints (sm/md/lg/xl conservés par défaut) */
+  --breakpoint-wide: 1440px;
+
+  /* Animations */
+  --animate-slide-up: slideUp 600ms cubic-bezier(0, 0, 0.2, 1) both;
+  --animate-fade-in: fadeIn 400ms cubic-bezier(0, 0, 0.2, 1) both;
+  --animate-shimmer: shimmer 1.5s linear infinite;
+}
+
+/* ===== KEYFRAMES ===== */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(28px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes shimmer {
+  from { background-position: -200% center; }
+  to   { background-position:  200% center; }
+}
+
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(220, 38, 38, 0); }
+  50%       { box-shadow: 0 0 24px 4px rgba(220, 38, 38, 0.15); }
+}
+
+/* ===== BASE ===== */
+@layer base {
+  :root {
+    /* Glassmorphism */
+    --glass-bg: rgba(255, 255, 255, 0.06);
+    --glass-bg-hover: rgba(255, 255, 255, 0.09);
+    --glass-bg-dark: rgba(0, 0, 0, 0.25);
+    --glass-border: rgba(255, 255, 255, 0.12);
+    --glass-blur: blur(14px);
+
+    /* Transitions */
+    --transition-fast: 120ms;
+    --transition-base: 220ms;
+    --transition-slow: 380ms;
+    --transition-slower: 700ms;
+
+    /* Easing */
+    --ease-in-out: cubic-bezier(0.4, 0, 0.2, 1);
+    --ease-out: cubic-bezier(0, 0, 0.2, 1);
+    --ease-bounce: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+    /* Surface palette */
+    --surface-950: #0a0d12;
+    --surface-900: #111827;
+    --surface-800: #1a2235;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    font-size: 16px;
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background-color: #111827;
+    color: #E5E7EB;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    /* Texture grain très subtile — donne un aspect matériau industriel */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.025'/%3E%3C/svg%3E");
+  }
+
+  /* Sélection de texte brandée */
+  ::selection {
+    background-color: rgba(220, 38, 38, 0.25);
+    color: #fff;
+  }
+
+  /* Scrollbar discrète */
+  ::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #111827;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(220, 38, 38, 0.4);
+    border-radius: 99px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(220, 38, 38, 0.65);
+  }
+
+  /* Titres */
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    line-height: 1.2;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+  }
+
+  h1 { font-size: clamp(2.25rem, 5vw, 3.5rem); font-weight: 900; line-height: 1.08; letter-spacing: -0.025em; }
+  h2 { font-size: clamp(1.75rem, 3.5vw, 2.5rem); font-weight: 800; line-height: 1.15; letter-spacing: -0.02em; }
+  h3 { font-size: clamp(1.35rem, 2.5vw, 1.875rem); font-weight: 700; line-height: 1.25; }
+  h4 { font-size: 1.375rem; font-weight: 700; line-height: 1.35; }
+  h5 { font-size: 1.125rem; font-weight: 600; line-height: 1.45; }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  img, video {
+    max-width: 100%;
+    display: block;
+  }
+
+  /* Focus accessible avec couleur marque */
+  :focus-visible {
+    outline: 2px solid #DC2626;
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Liens dans le contenu courant */
+  a {
+    transition: color var(--transition-fast) var(--ease-out);
+  }
+
+  /* Séparateur HR stylé */
+  hr {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    margin: 2rem 0;
+  }
+}
+
+/* ===== UTILITIES CUSTOM ===== */
+@layer utilities {
+
+  /* --- Glassmorphism --- */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid var(--glass-border);
+    border-radius: 12px;
+    box-shadow: var(--shadow-glass);
+    transition:
+      background var(--transition-base) var(--ease-out),
+      border-color var(--transition-base) var(--ease-out),
+      box-shadow var(--transition-slow) var(--ease-out),
+      transform var(--transition-slow) var(--ease-out);
+  }
+
+  .glass-dark {
+    background: var(--glass-bg-dark);
+    backdrop-filter: var(--glass-blur);
+    -webkit-backdrop-filter: var(--glass-blur);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+    box-shadow: 0 8px 40px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255,255,255,0.05);
+  }
+
+  /* Variante encore plus légère pour les surfaces secondaires */
+  .glass-subtle {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 12px;
+  }
+
+  /* --- Dégradé texte rouge → orange --- */
+  .text-gradient {
+    background: linear-gradient(135deg, #DC2626 0%, #EF4444 50%, #F97316 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Trait accentué sous un titre — style BTP chantier */
+  .title-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .title-underline::after {
+    content: '';
+    position: absolute;
+    bottom: -6px;
+    left: 0;
+    width: 2.5rem;
+    height: 3px;
+    background: linear-gradient(90deg, #DC2626, #F97316);
+    border-radius: 2px;
+  }
+
+  /* Bande d'accentuation latérale — pour les blocs de citation ou stat */
+  .border-accent-left {
+    border-left: 3px solid #DC2626;
+    padding-left: 1rem;
+  }
+
+  /* Badge tag style chantier */
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.2rem 0.65rem;
+    border-radius: 99px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    background: rgba(255, 255, 255, 0.07);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #9CA3AF;
+  }
+  .tag-primary {
+    background: rgba(220, 38, 38, 0.1);
+    border-color: rgba(220, 38, 38, 0.25);
+    color: #FCA5A5;
+  }
+
+  /* --- Skeleton shimmer --- */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255,255,255,0.04) 25%,
+      rgba(255,255,255,0.08) 50%,
+      rgba(255,255,255,0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: var(--animate-shimmer);
+  }
+
+  /* --- Fond rayures diagonales très subtiles (effet tôle / chantier) --- */
+  .bg-hatch {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 20px,
+      rgba(255, 255, 255, 0.012) 20px,
+      rgba(255, 255, 255, 0.012) 21px
+    );
+  }
+
+  /* --- Lueur rouge pulsée — pour les CTAs ou badges urgents --- */
+  .glow-primary {
+    animation: pulse-glow 3s ease-in-out infinite;
+  }
+
+  /* --- Grille déco (fond) --- */
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  /* --- Dégradé radial centré (hero glow) --- */
+  .hero-glow {
+    background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(220, 38, 38, 0.12) 0%, transparent 70%);
+  }
+
+  /* --- Lightbox dialog backdrop --- */
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.92);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+  }
+
+  dialog[open] {
+    display: flex;
+    animation: fadeIn 180ms var(--ease-out) both;
+  }
+
+  /* --- Scroll snap utilitaires --- */
+  .snap-x-mandatory {
+    scroll-snap-type: x mandatory;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .snap-x-mandatory::-webkit-scrollbar { display: none; }
+  .snap-center { scroll-snap-align: center; }
+}

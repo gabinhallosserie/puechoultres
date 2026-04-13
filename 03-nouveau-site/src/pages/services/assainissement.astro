@@ -1,0 +1,173 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/layout/Header.astro';
+import Footer from '../../components/layout/Footer.astro';
+import Container from '../../components/ui/Container.astro';
+import GlassCard from '../../components/ui/GlassCard.astro';
+import Button from '../../components/ui/Button.astro';
+import Animate from '../../components/react/ScrollAnimations';
+import Gallery from '../../components/ui/Gallery.astro';
+
+const gallery = [
+  { src: '/images/assainissement-01.jpg', alt: 'Réalisation d\'un assainissement individuel (type filtre à sable)', caption: 'Réalisation d\'un assainissement individuel (type filtre à sable)' },
+  { src: '/images/assainissement-02.jpg', alt: 'Réalisation d\'un assainissement individuel (type filtre à sable)', caption: 'Réalisation d\'un assainissement individuel (type filtre à sable)' },
+  { src: '/images/assainissement-03.jpg', alt: 'Réalisation d\'un assainissement individuel (type filtre à sable)', caption: 'Réalisation d\'un assainissement individuel (type filtre à sable)' },
+  { src: '/images/assainissement-04.jpg', alt: 'Réalisation d\'un assainissement individuel (type filtre à sable)', caption: 'Réalisation d\'un assainissement individuel (type filtre à sable)' },
+  { src: '/images/assainissement-05.jpg', alt: 'Réalisation d\'un assainissement individuel (type micro-station)', caption: 'Réalisation d\'un assainissement individuel (type micro-station)' },
+  { src: '/images/assainissement-06.jpg', alt: 'Réalisation d\'un assainissement individuel (type micro-station)', caption: 'Réalisation d\'un assainissement individuel (type micro-station)' }
+];
+
+const page = {
+  title: 'Assainissement',
+  description: 'Puechoultres & Fils est spécialisée dans l\'assainissement collectif et non collectif en Aveyron : raccordement au tout-à-l\'égout, fosses septiques, SPANC.',
+  hero: '/images/hero-assainissement.jpg',
+};
+
+const prestations = [
+  'Raccordement au tout-à-l\'égout (assainissement collectif)',
+  'Installation de fosse septique (assainissement individuel)',
+  'Branchements sous voie publique et terrains privés',
+  'Tranchées et pose de canalisations',
+  'Fosses à lisier et bassins en géo-membrane',
+  'Conformité SPANC (Service Public d\'Assainissement Non Collectif)',
+  'Réseaux d\'évacuation eaux pluviales',
+  'Aménagement de cours d\'eau et rivières',
+];
+
+const autresServices = [
+  { label: 'Voirie et réseaux',  href: '/services/voirie-et-reseaux' },
+  { label: 'Travaux publics',    href: '/services/travaux-publics' },
+  { label: 'Béton prêt à l\'emploi', href: '/services/beton-pret-a-l-emploi' },
+  { label: 'Goudronnage',        href: '/services/goudronnage' },
+  { label: 'Transport',          href: '/services/transport' },
+  { label: 'Recyclage',          href: '/services/recyclage' },
+];
+---
+
+<BaseLayout title={page.title} description={page.description}>
+  <Header />
+  <main>
+
+    <section class="relative h-72 sm:h-96 flex items-end overflow-hidden">
+      <img src={page.hero} alt="Chantier d'assainissement Puech Oultres" class="absolute inset-0 w-full h-full object-cover object-center" loading="eager" />
+      <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/20" />
+      <Container class="relative z-10 pb-8 sm:pb-12">
+        <nav aria-label="Fil d'Ariane" class="mb-3">
+          <ol class="flex items-center gap-2 text-sm text-gray-400">
+            <li><a href="/" class="hover:text-white transition-colors">Accueil</a></li>
+            <li aria-hidden="true" class="text-gray-600">/</li>
+            <li><a href="/services" class="hover:text-white transition-colors">Services</a></li>
+            <li aria-hidden="true" class="text-gray-600">/</li>
+            <li class="text-white font-medium" aria-current="page">Assainissement</li>
+          </ol>
+        </nav>
+        <h1 class="font-heading font-black text-3xl sm:text-5xl text-white leading-tight">Assainissement</h1>
+      </Container>
+    </section>
+
+    <section class="py-16 bg-gray-900">
+      <Container>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-10">
+
+          <div class="lg:col-span-8 flex flex-col gap-12">
+            <Animate animation="slideUp" client:visible>
+              <div>
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-5">Notre expertise</h2>
+                <div class="space-y-4 text-gray-300 leading-relaxed">
+                  <p>La SARL Puechoultres & Fils est spécialisée dans le traitement de toutes les eaux usées d'entreprise, d'un groupe d'habitations ou d'une maison. L'assainissement a pour objet l'évacuation des eaux usées, qui ne peuvent être rejetées en l'état dans la nature car nocives pour l'environnement.</p>
+                  <p><strong class="text-white">Assainissement collectif</strong> — Raccordement au tout-à-l'égout avec mise en place de branchements sous voie publique et terrain privé.</p>
+                  <p><strong class="text-white">Assainissement non collectif</strong> — Installation de votre propre système (fosse septique) si votre habitation est en zone non reliée au réseau public. La Commune contrôle la conformité via le SPANC.</p>
+                </div>
+              </div>
+            </Animate>
+
+            <Animate animation="slideUp" delay={0.1} client:visible>
+              <div>
+                <h2 class="font-heading font-bold text-2xl sm:text-3xl text-white mb-6">Nos prestations</h2>
+                <ul class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                  {prestations.map(item => (
+                    <li class="flex items-start gap-3 text-gray-300">
+                      <svg class="w-5 h-5 text-primary shrink-0 mt-0.5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12" /></svg>
+                      <span>{item}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </Animate>
+
+            <Animate animation="slideUp" delay={0.15} client:visible>
+              <div class="p-6 rounded-card border border-white/10 bg-white/5">
+                <h3 class="font-heading font-semibold text-lg text-white mb-2">Conformité réglementaire</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Nos installations respectent les normes en vigueur et les exigences du SPANC. Nous vous accompagnons dans toutes les démarches administratives.</p>
+              </div>
+            </Animate>
+          </div>
+
+          <aside class="lg:col-span-4">
+            <div class="lg:sticky lg:top-24 flex flex-col gap-6">
+              <GlassCard hover={false}>
+                <h3 class="font-heading font-bold text-lg text-white mb-5">Besoin d'un devis ?</h3>
+                <form name="devis-assainissement" method="POST" data-netlify="true" class="flex flex-col gap-4">
+                  <input type="hidden" name="form-name" value="devis-assainissement" />
+                  <input type="hidden" name="service" value="Assainissement" />
+                  <div>
+                    <label for="nom" class="block text-xs font-medium text-gray-400 mb-1.5">Nom *</label>
+                    <input id="nom" name="nom" type="text" required placeholder="Votre nom" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="email" class="block text-xs font-medium text-gray-400 mb-1.5">Email *</label>
+                    <input id="email" name="email" type="email" required placeholder="votre@email.fr" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="telephone" class="block text-xs font-medium text-gray-400 mb-1.5">Téléphone</label>
+                    <input id="telephone" name="telephone" type="tel" placeholder="06 00 00 00 00" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors" />
+                  </div>
+                  <div>
+                    <label for="message" class="block text-xs font-medium text-gray-400 mb-1.5">Message *</label>
+                    <textarea id="message" name="message" required rows="4" placeholder="Type d'assainissement, localisation…" class="w-full rounded-btn bg-white/5 border border-white/10 px-3 py-2.5 text-sm text-white placeholder:text-gray-500 focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary transition-colors resize-none"></textarea>
+                  </div>
+                  <Button variant="primary" class="w-full justify-center">Envoyer ma demande</Button>
+                </form>
+              </GlassCard>
+              <GlassCard hover={false}>
+                <h3 class="font-heading font-semibold text-base text-white mb-4">Autres services</h3>
+                <ul class="flex flex-col gap-1">
+                  {autresServices.map(s => (
+                    <li>
+                      <a href={s.href} class="flex items-center gap-2 px-3 py-2 rounded-lg text-sm text-gray-400 hover:text-white hover:bg-white/10 transition-colors duration-[150ms]">
+                        <svg class="w-3.5 h-3.5 text-primary shrink-0" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+                        {s.label}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+                <div class="mt-4 pt-4 border-t border-white/10">
+                  <a href="/services" class="text-sm text-primary hover:text-primary-light font-medium transition-colors">Voir tous les services →</a>
+                </div>
+              </GlassCard>
+            </div>
+          </aside>
+
+        </div>
+      </Container>
+    </section>
+
+    <Gallery images={gallery} title="Nos chantiers assainissement" />
+
+    <section class="relative py-20 overflow-hidden" style="background: linear-gradient(135deg, #1F1F1F 0%, #3B0A0A 50%, #1F1F1F 100%);">
+      <div class="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary to-transparent" aria-hidden="true" />
+      <Container class="relative z-10 text-center">
+        <Animate animation="slideUp" client:visible>
+          <h2 class="font-heading font-black text-2xl sm:text-4xl text-white mb-4">Un projet d'assainissement ?</h2>
+          <p class="text-gray-300 text-lg max-w-xl mx-auto mb-8">Devis gratuit, réponse sous 48h, conformité SPANC garantie.</p>
+          <div class="flex flex-wrap justify-center gap-4">
+            <Button href="/nous-contacter" variant="primary" size="lg">Contactez-nous</Button>
+            <Button href="tel:0565690270" variant="outline" size="lg">05 65 69 02 70</Button>
+          </div>
+        </Animate>
+      </Container>
+    </section>
+
+  </main>
+  <Footer />
+</BaseLayout>
