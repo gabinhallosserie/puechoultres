@@ -2,7 +2,6 @@ services:
   web:
     build:
       context: .
-      dockerfile: Dockerfile
     ports:
-      - "8138:80"
+      - "${DEPLOY_PORT}:80"
     restart: unless-stopped
