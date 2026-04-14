@@ -72,10 +72,12 @@ Le projet se déploie via un build multi-stage : Node.js construit le site stati
 ```bash
 # Depuis ce dossier
 docker compose up -d --build
-# Accessible sur http://<serveur>:3000
+# Accessible sur http://<serveur>:8138
 ```
 
-### Via Portainer (Git)
+### Via Portainer
+
+URL Portainer : `https://portainer-dev.artaban.page:4438/`
 
 | Champ | Valeur |
 |---|---|
