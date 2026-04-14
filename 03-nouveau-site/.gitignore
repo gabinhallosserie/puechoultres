@@ -1,5 +1,5 @@
 # build output
-dist/
+# dist/ inclus dans git pour déploiement Docker sans build Node sur le serveur
 # generated types
 .astro/
 
