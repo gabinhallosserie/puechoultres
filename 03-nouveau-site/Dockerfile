@@ -1,0 +1,23 @@
+# ── Stage 1 : build ──────────────────────────────────────────────────────────
+FROM node:22-alpine AS builder
+
+WORKDIR /app
+
+COPY package*.json ./
+RUN npm ci
+
+COPY . .
+RUN npm run build
+
+# ── Stage 2 : serve ──────────────────────────────────────────────────────────
+FROM nginx:stable-alpine AS runner
+
+# Copie le build statique Astro
+COPY --from=builder /app/dist /usr/share/nginx/html
+
+# Config Nginx : SPA-friendly (fallback sur index.html pour les routes Astro)
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

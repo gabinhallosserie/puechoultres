@@ -35,13 +35,27 @@ Avant de commencer, assurez-vous d'avoir :
 mkdir nom-du-projet
 cd nom-du-projet
 
-# Créer la structure de dossiers
-mkdir -p 01-extraction/{screenshots/{desktop,mobile},assets/images,html}
-mkdir -p 02-design/references
-mkdir -p 03-nouveau-site
-mkdir -p 04-livrables/{documentation,exports}
-mkdir -p scripts
-mkdir -p .claude-workspace
+# Créer la structure de dossiers (version PowerShell)
+mkdir 01-extraction
+mkdir 01-extraction\screenshots
+mkdir 01-extraction\screenshots\desktop
+mkdir 01-extraction\screenshots\mobile
+mkdir 01-extraction\assets
+mkdir 01-extraction\assets\images
+mkdir 01-extraction\html
+
+mkdir 02-design
+mkdir 02-design\references
+
+mkdir 03-nouveau-site
+
+mkdir 04-livrables
+mkdir 04-livrables\documentation
+mkdir 04-livrables\exports
+
+mkdir scripts
+
+mkdir .claude-workspace
 ```
 
 ### 0.2 Initialiser package.json

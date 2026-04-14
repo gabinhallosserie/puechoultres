@@ -84,7 +84,6 @@ const stats = [
   { value: '50+',  label: 'Ans d\'expérience' },
   { value: '47',   label: 'Collaborateurs' },
   { value: '12',   label: 'Services BTP' },
-  { value: '100%', label: 'Clients satisfaits' },
 ];
 ---
 
@@ -207,7 +206,7 @@ const stats = [
           </div>
         </Animate>
 
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-8 max-w-3xl mx-auto">
           {stats.map(({ value, label }, i) => (
             <Animate animation="fadeIn" delay={i * 0.15} client:visible>
               <div class="text-center">

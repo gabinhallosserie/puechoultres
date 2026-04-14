@@ -37,10 +37,9 @@ const currentPath = Astro.url.pathname;
     <!-- Logo -->
     <a
       href="/"
-      class="font-heading font-bold text-xl tracking-wide text-white hover:text-primary transition-colors duration-[250ms]"
       aria-label="Puech Oultres — retour à l'accueil"
     >
-      Puechoultres
+      <img src="/images/img-1.png" alt="Puechoultres" class="h-12 w-auto" />
     </a>
 
     <!-- ===== NAV DESKTOP ===== -->
@@ -140,8 +139,8 @@ const currentPath = Astro.url.pathname;
 >
   <!-- En-tête overlay -->
   <div class="flex items-center justify-between h-20 px-4 border-b border-white/10">
-    <a href="/" class="font-heading font-bold text-xl text-white" onclick="closeMobileMenu()">
-      Puech Oultres
+    <a href="/" onclick="closeMobileMenu()">
+      <img src="/images/img-1.png" alt="Puechoultres" class="h-10 w-auto" />
     </a>
     <button
       onclick="closeMobileMenu()"
