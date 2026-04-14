@@ -1,43 +1,93 @@
-# Astro Starter Kit: Minimal
+# Nouveau site — Puechoultres & Fils
 
-```sh
-npm create astro@latest -- --template minimal
+Refonte du site [puechoultres.fr](https://www.puechoultres.fr) — SARL BTP basée à Baraqueville (Aveyron, 12160).
+
+---
+
+## Stack technique
+
+| Outil | Version | Rôle |
+|---|---|---|
+| Astro | 6.x | Framework principal (rendu statique) |
+| React | 19.x | Composants interactifs (formulaires, slider) |
+| Tailwind CSS | 4.x | Styling utility-first |
+| Framer Motion | 12.x | Animations au scroll |
+| React Hook Form | 7.x | Gestion et validation des formulaires |
+| Nginx | stable-alpine | Serveur web en production |
+| Docker | — | Conteneurisation |
+
+---
+
+## Structure du projet
+
+```
+src/
+├── components/
+│   ├── layout/        → Header.astro, Footer.astro
+│   ├── react/         → Composants React (formulaires, slider, animations)
+│   └── ui/            → Composants Astro réutilisables (Button, GlassCard…)
+├── layouts/
+│   └── BaseLayout.astro   → Layout racine (SEO, schema.org, fonts)
+├── pages/
+│   ├── index.astro
+│   ├── presentation.astro
+│   ├── nos-evenements.astro
+│   ├── offres-d-emploi.astro
+│   ├── nous-contacter.astro
+│   ├── mentions-legales.astro
+│   └── services/          → Une page par service (12 au total)
+public/
+└── images/            → Logo et visuels statiques
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+---
 
-## 🚀 Project Structure
+## Informations client
 
-Inside of your Astro project, you'll see the following folders and files:
+| Champ | Valeur |
+|---|---|
+| Raison sociale | SARL Puechoultres & Fils |
+| Adresse | ZA Marengo — 12160 Baraqueville |
+| Téléphone | 05 65 69 02 70 |
+| Email | sarl@puechoultres.fr |
+| Facebook | [Puechoultrestp](https://www.facebook.com/Puechoultrestp#) |
 
-```text
-/
-├── public/
-├── src/
-│   └── pages/
-│       └── index.astro
-└── package.json
+---
+
+## Développement local
+
+```bash
+npm install
+npm run dev       # http://localhost:4321
+npm run build     # génère dist/
+npm run preview   # prévisualise le build
 ```
 
-Astro looks for `.astro` or `.md` files in the `src/pages/` directory. Each page is exposed as a route based on its file name.
+---
 
-There's nothing special about `src/components/`, but that's where we like to put any Astro/React/Vue/Svelte/Preact components.
+## Déploiement Docker
 
-Any static assets, like images, can be placed in the `public/` directory.
+Le projet se déploie via un build multi-stage : Node.js construit le site statique, Nginx le sert.
 
-## 🧞 Commands
+```bash
+# Depuis ce dossier
+docker compose up -d --build
+# Accessible sur http://<serveur>:3000
+```
 
-All commands are run from the root of the project, from a terminal:
+### Via Portainer (Git)
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+| Champ | Valeur |
+|---|---|
+| Repository URL | URL du repo GitHub |
+| Branch | `refs/heads/main` |
+| Compose path | `03-nouveau-site/docker-compose.yml` |
 
-## 👀 Want to learn more?
+---
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+## Choix techniques notables
+
+- **Astro en mode statique** : pas d'adaptateur SSR, le build produit du HTML pur servi par Nginx. Idéal pour un site vitrine.
+- **React en îles isolées** : seuls les composants interactifs (formulaires, hero slider) sont hydrés côté client. Le reste est du HTML statique.
+- **Formulaires Netlify-ready** : les formulaires incluent les attributs `data-netlify` pour une activation sans backend si le client migre vers Netlify.
+- **Tailwind v4** : intégré via le plugin Vite (`@tailwindcss/vite`), pas de fichier de config séparé.
